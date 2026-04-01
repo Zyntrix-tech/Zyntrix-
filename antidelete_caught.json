@@ -1,0 +1,545 @@
+[
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "3EB0F215C96433230D4753"
+    },
+    "cached": null,
+    "time": "3/7/2026, 1:49:01 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "3EB003B2741447CCA16072"
+    },
+    "cached": null,
+    "time": "3/8/2026, 8:23:33 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "135657229943022@lid",
+      "fromMe": true,
+      "id": "A537F694AD21EFDB54879A217BA8FC27"
+    },
+    "cached": {
+      "pushName": "Ekemini Emmanuel",
+      "timestamp": 1772983512,
+      "message": null
+    },
+    "time": "3/8/2026, 8:25:16 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "ACE62B78AFDAF9599C30C7DD53EB2090"
+    },
+    "cached": {
+      "pushName": "ANONYMOUS 😷",
+      "timestamp": 1772983556,
+      "message": "Ucazuezceuczeuczeu"
+    },
+    "time": "3/8/2026, 8:26:02 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "AC3C85A08FEAF42A5844B5E08AAE57BC"
+    },
+    "cached": {
+      "pushName": "ANONYMOUS 😷",
+      "timestamp": 1772983630,
+      "message": "😂😂😂😂😂😂😂😂😂"
+    },
+    "time": "3/8/2026, 8:27:13 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "135657229943022@lid",
+      "fromMe": true,
+      "id": "AC5859D7E8B9DA2C50E5997DBFB6F943"
+    },
+    "cached": {
+      "pushName": "ANONYMOUS 😷",
+      "timestamp": 1772983643,
+      "message": "😭😭😭😭😭"
+    },
+    "time": "3/8/2026, 8:27:31 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "A568675E026FE4DCAA07B9D010AB2F0F"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1772984124,
+      "message": "> hdhsvsisv"
+    },
+    "time": "3/8/2026, 8:35:28 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "A5EF45B6E91BD7995238D53DDD69C29C"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1772984180,
+      "message": null
+    },
+    "time": "3/8/2026, 8:36:25 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363422335536227@g.us",
+      "fromMe": true,
+      "id": "A5F693EA389233C15F0AFD2D254722A2"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1772984395,
+      "message": "This is Nexora antidelete function"
+    },
+    "time": "3/8/2026, 8:40:00 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420147110712@g.us",
+      "fromMe": true,
+      "id": "3EB0C0D5350ACECAEC417D"
+    },
+    "cached": null,
+    "time": "3/8/2026, 11:38:01 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "171764499894381@lid",
+      "fromMe": true,
+      "id": "3EB0FE65E4CCD0505F8036"
+    },
+    "cached": null,
+    "time": "3/10/2026, 7:35:49 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "171764499894381@lid",
+      "fromMe": true,
+      "id": "A57D54FA6729AA17DDFDB24310B95F3F"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773153381,
+      "message": "Hello mommy this is my bot"
+    },
+    "time": "3/10/2026, 7:36:30 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "171764499894381@lid",
+      "fromMe": true,
+      "id": "A55EF42DF81253E33053F03256E667F5"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773153408,
+      "message": null
+    },
+    "time": "3/10/2026, 7:36:54 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420147110712@g.us",
+      "fromMe": false,
+      "id": "3EB00F9CE70F7083D52C4E",
+      "participant": "135657229943022@lid"
+    },
+    "cached": null,
+    "time": "3/12/2026, 9:47:39 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420147110712@g.us",
+      "fromMe": false,
+      "id": "3EB0812FB6300E81F2E816",
+      "participant": "135657229943022@lid"
+    },
+    "cached": null,
+    "time": "3/12/2026, 9:51:52 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420147110712@g.us",
+      "fromMe": false,
+      "id": "3EB079500DF99926B9E605",
+      "participant": "135657229943022@lid"
+    },
+    "cached": null,
+    "time": "3/12/2026, 9:52:13 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420147110712@g.us",
+      "fromMe": false,
+      "id": "3EB08D85115663AE5F0191",
+      "participant": "135657229943022@lid"
+    },
+    "cached": null,
+    "time": "3/12/2026, 9:53:32 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363405437457423@g.us",
+      "fromMe": true,
+      "id": "A57A46DD97BFC1632F3A99AD51A333F7"
+    },
+    "cached": {
+      "pushName": "VIOLET KING DEV",
+      "timestamp": 1773584825,
+      "message": "Hi"
+    },
+    "time": "3/15/2026, 7:27:11 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363405437457423@g.us",
+      "fromMe": true,
+      "id": "A5A3BB7E3C30446D0B16AB3DED630C23"
+    },
+    "cached": {
+      "pushName": "HOLYSINNER",
+      "timestamp": 1773584833,
+      "message": "Lol"
+    },
+    "time": "3/15/2026, 7:27:18 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "223532327956714@lid",
+      "fromMe": true,
+      "id": "A506975D4CA4B8B7FD59B7EAE5B99085"
+    },
+    "cached": null,
+    "time": "3/15/2026, 1:52:29 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "status@broadcast",
+      "fromMe": true,
+      "id": "ACCB1F7FE5E104B197CC93DBCF742B48"
+    },
+    "cached": null,
+    "time": "3/15/2026, 2:18:54 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "status@broadcast",
+      "fromMe": true,
+      "id": "ACCB1F7FE5E104B197CC93DBCF742B48"
+    },
+    "cached": null,
+    "time": "3/15/2026, 2:18:55 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420911845472@g.us",
+      "fromMe": true,
+      "id": "A540C6CB43799EB40C92AAC88EAF46DE"
+    },
+    "cached": null,
+    "time": "3/18/2026, 11:53:28 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420911845472@g.us",
+      "fromMe": true,
+      "id": "A50B9C6321635FA0FFC21DFDF500BA01"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773860052,
+      "message": null
+    },
+    "time": "3/18/2026, 11:54:22 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "136820947955809@lid",
+      "fromMe": true,
+      "id": "3EB08DAFC23DBE64A38225"
+    },
+    "cached": null,
+    "time": "3/18/2026, 11:55:35 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420911845472@g.us",
+      "fromMe": true,
+      "id": "A537DC6D8FFE6A26B8A1DCC020F04022"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773860082,
+      "message": "Deji welcome"
+    },
+    "time": "3/18/2026, 11:59:16 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420911845472@g.us",
+      "fromMe": true,
+      "id": "A5C9C31EE86366CB4F5CDDD8B8014166"
+    },
+    "cached": null,
+    "time": "3/18/2026, 12:05:45 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "235948910604353@lid",
+      "fromMe": true,
+      "id": "A544517E5F28105E86BD5E188A1F334C"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773861017,
+      "message": null
+    },
+    "time": "3/18/2026, 12:10:24 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "status@broadcast",
+      "fromMe": true,
+      "id": "AC10C6A153BE19D1EBC8FDA3ADB690F3"
+    },
+    "cached": {
+      "pushName": "Princess Busola🤪🤪🤪",
+      "timestamp": 1773860900,
+      "message": null
+    },
+    "time": "3/18/2026, 12:10:59 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "status@broadcast",
+      "fromMe": true,
+      "id": "AC3050966F7D0710C3B835CFF9DC5157"
+    },
+    "cached": {
+      "pushName": "Princess Busola🤪🤪🤪",
+      "timestamp": 1773860556,
+      "message": null
+    },
+    "time": "3/18/2026, 12:11:45 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "status@broadcast",
+      "fromMe": true,
+      "id": "3AAEDF39B40AB068A115"
+    },
+    "cached": null,
+    "time": "3/18/2026, 12:14:40 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "status@broadcast",
+      "fromMe": true,
+      "id": "3A3D890E1856BD4FADE4"
+    },
+    "cached": null,
+    "time": "3/18/2026, 12:14:40 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363407137772712@g.us",
+      "fromMe": true,
+      "id": "AC2D2234B4F24905DA20109ADE8D24B2"
+    },
+    "cached": {
+      "pushName": "Tutor Erdös 👨‍🏫🧠🐐",
+      "timestamp": 1773861335,
+      "message": null
+    },
+    "time": "3/18/2026, 12:15:44 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363420911845472@g.us",
+      "fromMe": true,
+      "id": "AC35C6E72057B6CAB345F6189C1E56E2"
+    },
+    "cached": {
+      "pushName": "Princess Busola🤪🤪🤪",
+      "timestamp": 1773861512,
+      "message": null
+    },
+    "time": "3/18/2026, 12:18:41 PM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "A56335B3F51E2E5DE4F16954895CA235"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913151,
+      "message": null
+    },
+    "time": "3/19/2026, 2:39:15 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "A56335B3F51E2E5DE4F16954895CA235"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913151,
+      "message": null
+    },
+    "time": "3/19/2026, 2:39:15 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "A5A95A8F02E41A6B95E1F418AC57E103"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913140,
+      "message": null
+    },
+    "time": "3/19/2026, 2:39:28 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "A5A95A8F02E41A6B95E1F418AC57E103"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913140,
+      "message": null
+    },
+    "time": "3/19/2026, 2:39:28 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "3EB03BE1CBF49C405D4E1F"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913551,
+      "message": null
+    },
+    "time": "3/19/2026, 2:46:07 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "A59D8154D010F6FCC28D3720BE7BAC3D"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913481,
+      "message": null
+    },
+    "time": "3/19/2026, 2:47:24 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "71197689663714@lid",
+      "fromMe": true,
+      "id": "A5137E6928E04775E42F938C48326925"
+    },
+    "cached": {
+      "pushName": "⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧",
+      "timestamp": 1773913807,
+      "message": null
+    },
+    "time": "3/19/2026, 2:50:12 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "192947194699797@lid",
+      "fromMe": true,
+      "id": "A5FB339A0CDD125DF5E8B0469BFF71CB"
+    },
+    "cached": null,
+    "time": "3/19/2026, 2:51:26 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "135657229943022@lid",
+      "fromMe": true,
+      "id": "3A7C83504BAABE7BAF26"
+    },
+    "cached": {
+      "pushName": "A.T.N.E",
+      "timestamp": 1773914018,
+      "message": null
+    },
+    "time": "3/19/2026, 2:53:44 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "135657229943022@lid",
+      "fromMe": true,
+      "id": "3A7C83504BAABE7BAF26"
+    },
+    "cached": {
+      "pushName": "A.T.N.E",
+      "timestamp": 1773914018,
+      "message": null
+    },
+    "time": "3/19/2026, 2:53:44 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "135657229943022@lid",
+      "fromMe": true,
+      "id": "A5C7FEAF0EE800401B7D91A118E92D43"
+    },
+    "cached": {
+      "pushName": "Septorch",
+      "timestamp": 1774088788,
+      "message": "Hhhh"
+    },
+    "time": "3/21/2026, 3:26:35 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363405437457423@g.us",
+      "fromMe": true,
+      "id": "3EB01FE1CA3F16DF893F3D"
+    },
+    "cached": {
+      "pushName": "Spooderman.",
+      "timestamp": 1774088812,
+      "message": null
+    },
+    "time": "3/21/2026, 3:27:14 AM"
+  },
+  {
+    "revokedKey": {
+      "remoteJid": "120363405437457423@g.us",
+      "fromMe": true,
+      "id": "AC55B7C55055FFBD08B0E99A8867486E"
+    },
+    "cached": null,
+    "time": "3/21/2026, 3:28:18 AM"
+  }
+]
