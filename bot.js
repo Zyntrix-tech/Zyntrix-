@@ -1,1 +1,1 @@
-require('./backend/bots/bot.js');
+require('./backend/bots/telegram.js');
