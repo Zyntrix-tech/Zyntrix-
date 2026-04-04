@@ -79,25 +79,74 @@ function loadUserPrefixHelpers() {
 
 telegram.on("polling_error", console.log);
 
+function resolveCommandsPath() {
+    const pathsToTry = [
+        path.join(__dirname, "commands"),
+        path.join(__dirname, "..", "commands"),
+        path.join(__dirname, "..", "..", "commands"),
+        path.join(process.cwd(), "backend", "bots", "commands"),
+        path.join(process.cwd(), "commands")
+    ];
+    for (const tryPath of pathsToTry) {
+        if (fs.existsSync(tryPath)) {
+            console.log("Found commands directory:", tryPath);
+            return tryPath;
+        }
+    }
+    console.error("Commands directory not found in any of these locations:", pathsToTry);
+    return null;
+}
+
 function loadCommands() {
     commands.clear();
-    const commandsPath = path.join(__dirname, "commands");
-    if (!fs.existsSync(commandsPath)) {
-        console.log("Commands directory not found:", commandsPath);
-        return;
+    let commandsPath = resolveCommandsPath();
+    let filesToLoad = [];
+    
+    if (!commandsPath) {
+        console.log("Commands folder not found. Searching for scattered command files...");
+        const searchPaths = [
+            __dirname,
+            path.join(__dirname, ".."),
+            path.join(__dirname, "..", ".."),
+            process.cwd(),
+            path.join(process.cwd(), "backend", "bots")
+        ];
+        
+        for (const searchPath of searchPaths) {
+            try {
+                if (fs.existsSync(searchPath)) {
+                    const found = fs.readdirSync(searchPath).filter((f) => f.endsWith(".js") && f !== "telegram.js" && f !== "index.js" && f !== "bot.js");
+                    if (found.length > 0) {
+                        console.log(`Found ${found.length} command files in:`, searchPath);
+                        filesToLoad = found.map(f => ({ name: f, path: path.join(searchPath, f) }));
+                        commandsPath = searchPath;
+                        break;
+                    }
+                }
+            } catch (e) {
+                // Skip if can't read directory
+            }
+        }
     }
-
-    const files = fs.readdirSync(commandsPath).filter((f) => f.endsWith(".js"));
-    console.log("Loading commands from:", commandsPath, "-", files.length, "files found");
+    
+    if (!commandsPath) {
+        console.error('No commands found in any location');
+        filesToLoad = [];
+    } else {
+        filesToLoad = fs.readdirSync(commandsPath).filter((f) => f.endsWith(".js")).map(f => ({ name: f, path: path.join(commandsPath, f) }));
+    }
+    
+    console.log("Loading commands from:", commandsPath || "scattered locations", "-", filesToLoad.length, "files found");
     const loadedPrimaryNames = new Set();
     const loadedFiles = [];
 
-    for (const file of files) {
-        const fileBase = file.replace(/\.js$/i, "").toLowerCase();
+    for (const file of filesToLoad) {
+        const fileName = file.name;
+        const filePath = file.path;
+        const fileBase = fileName.replace(/\.js$/i, "").toLowerCase();
         try {
-            // Clear cache to avoid stale modules
-            delete require.cache[require.resolve(path.join(commandsPath, file))];
-            const cmd = require(path.join(commandsPath, file));
+            delete require.cache[require.resolve(filePath)];
+            const cmd = require(filePath);
             if (!cmd?.name || typeof cmd.execute !== "function") continue;
             const primary = String(cmd.name).toLowerCase();
             commands.set(primary, cmd);
@@ -105,7 +154,6 @@ function loadCommands() {
             loadedFiles.push(fileBase);
             console.log("Loaded command:", primary);
 
-            // Add filename alias so commands are reachable by file name too.
             if (!commands.has(fileBase)) commands.set(fileBase, cmd);
             if (Array.isArray(cmd.aliases)) {
                 for (const alias of cmd.aliases) {
@@ -113,13 +161,12 @@ function loadCommands() {
                 }
             }
         } catch (e) {
-            console.error("Failed to load command", file, e?.message || e);
+            console.error("Failed to load command", fileName, e?.message || e);
         }
     }
 
     console.log("Total commands loaded:", commands.size);
 
-    // Fallback help command when help.js fails to load.
     if (!commands.has("help")) {
         const helpCmd = {
             name: "help",
@@ -136,7 +183,6 @@ function loadCommands() {
         commands.set("help", helpCmd);
     }
     
-    // Load user prefix helpers after commands are loaded
     loadUserPrefixHelpers();
 }
 

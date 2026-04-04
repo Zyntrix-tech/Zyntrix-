@@ -308,33 +308,83 @@ Power up your WhatsApp experience! 🚀` });
 
         // Load commands
         const commands = new Map();
+        
+        function resolveCommandsPath() {
+            const pathsToTry = [
+                path.join(__dirname, 'commands'),
+                path.join(__dirname, '..', 'commands'),
+                path.join(__dirname, '..', '..', 'commands'),
+                path.join(process.cwd(), 'backend', 'bots', 'commands'),
+                path.join(process.cwd(), 'commands')
+            ];
+            for (const tryPath of pathsToTry) {
+                if (fs.existsSync(tryPath)) {
+                    console.log('Found commands directory:', tryPath);
+                    return tryPath;
+                }
+            }
+            console.error('Commands directory not found in any of these locations:', pathsToTry);
+            return null;
+        }
+        
         try {
-            const commandsPath = path.join(__dirname, 'commands');
-            console.log('Loading commands from:', commandsPath);
-            if (fs.existsSync(commandsPath)) {
-                const files = fs.readdirSync(commandsPath).filter(f => f.endsWith('.js'));
-                console.log('Found command files:', files.length);
-                for (const file of files) {
+            let commandsPath = resolveCommandsPath();
+            let filesToLoad = [];
+            
+            if (!commandsPath) {
+                // Fallback: search for command files in parent directories
+                console.log("Commands folder not found. Searching for scattered command files...");
+                const searchPaths = [
+                    __dirname,
+                    path.join(__dirname, '..'),
+                    path.join(__dirname, '..', '..'),
+                    process.cwd(),
+                    path.join(process.cwd(), 'backend', 'bots')
+                ];
+                
+                for (const searchPath of searchPaths) {
                     try {
-                        const cmdPath = path.join(commandsPath, file);
-                        delete require.cache[require.resolve(cmdPath)]; // Clear cache to avoid stale modules
-                        const cmd = require(cmdPath);
-                        if (cmd && cmd.name) {
-                            const cmdKey = String(cmd.name).toLowerCase();
-                            commands.set(cmdKey, cmd);
-                            console.log('Loaded command:', cmdKey);
-                            if (Array.isArray(cmd.aliases)) {
-                                for (const alias of cmd.aliases) {
-                                    if (alias) commands.set(String(alias).toLowerCase(), cmd);
-                                }
+                        if (fs.existsSync(searchPath)) {
+                            const found = fs.readdirSync(searchPath).filter((f) => f.endsWith('.js') && f !== 'Webnest.js' && f !== 'index.js' && f !== 'bot.js');
+                            if (found.length > 0) {
+                                console.log(`Found ${found.length} command files in:`, searchPath);
+                                filesToLoad = found.map(f => ({ name: f, path: path.join(searchPath, f) }));
+                                commandsPath = searchPath;
+                                break;
                             }
                         }
                     } catch (e) {
-                        console.error('Failed to load command', file, e.message);
+                        // Skip if can't read directory
                     }
                 }
+            }
+            
+            if (!commandsPath) {
+                console.error('No commands found in any location');
+                filesToLoad = [];
             } else {
-                console.error('Commands directory not found:', commandsPath);
+                filesToLoad = fs.readdirSync(commandsPath).filter(f => f.endsWith('.js')).map(f => ({ name: f, path: path.join(commandsPath, f) }));
+            }
+            
+            console.log('Found command files:', filesToLoad.length);
+            for (const file of filesToLoad) {
+                try {
+                    const cmdPath = file.path;
+                    delete require.cache[require.resolve(cmdPath)]; // Clear cache to avoid stale modules
+                    const cmd = require(cmdPath);
+                    if (cmd && cmd.name) {
+                        const cmdKey = String(cmd.name).toLowerCase();
+                        commands.set(cmdKey, cmd);
+                        console.log('Loaded command:', cmdKey);
+                        if (Array.isArray(cmd.aliases)) {
+                            for (const alias of cmd.aliases) {
+                                if (alias) commands.set(String(alias).toLowerCase(), cmd);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error('Failed to load command', file.name, e.message);
+                }
             }
         } catch (e) {
             console.error('Error loading commands', e);
