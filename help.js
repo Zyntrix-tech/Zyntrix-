@@ -145,6 +145,16 @@ module.exports = {
 │ ⌬ !warn      → Warn member
 │ ⌬ !warnings  → Show warnings
 │ ⌬ !clearwarnings → Clear warnings
+│ ⌬ !mute      → Mute member
+│ ⌬ !unmute    → Unmute member
+│ ⌬ !invite    → Get invite link
+│ ⌬ !ivitelink → Get invite link
+│ ⌬ !revoke    → Revoke invite link
+│ ⌬ !setname   → Set group name
+│ ⌬ !setdesc   → Set group description
+│ ⌬ !setnewsletter → Set newsletter
+│ ⌬ !poll      → Create poll
+│ ⌬ !gstatus   → Post group status
 ╰────────────────────────╯
 
 ╭─〔 🎵 MEDIA 〕─╮
@@ -310,6 +320,10 @@ module.exports = {
 │ ⌬ !setpp     → Set bot profile photo
 │ ⌬ !mode      → Bot public/private mode
 │ ⌬ !setprefix   → Change command prefix
+│ ⌬ !ftyping   → Fake typing on/off
+│ ⌬ !frecording → Fake recording on/off
+│ ⌬ !tweet     → Post simulated tweet
+│ ⌬ !tweet2    → Post real tweet (API)
 ╰──────────────╯
 
 > Powered by ⟦ 𓆩𖤍 NΞXØRΛ 𖤍𓆪 ⟧ ⚡`;

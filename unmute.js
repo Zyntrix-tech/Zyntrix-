@@ -28,6 +28,7 @@ module.exports = {
             
             // Check if sender is admin or owner
             const isOwner = global.ownerJid && String(sender).split('@')[0] === String(global.ownerJid).split('@')[0];
+            const isOwnerAndAdmin = isOwner && isAdmin;
             
             if (!isAdmin && !isOwner) {
                 await sock.sendMessage(jid, { 
@@ -36,7 +37,8 @@ module.exports = {
                 return;
             }
 
-            if (!botAdmin) {
+            // Skip bot permission check if owner is also an admin
+            if (!isOwnerAndAdmin && !botAdmin) {
                 await sock.sendMessage(jid, { 
                     text: "🔊 I need admin rights to unmute the group!" 
                 }, { quoted: msg });

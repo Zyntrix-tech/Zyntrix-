@@ -22,13 +22,15 @@ module.exports = {
             const ownerData = participants.find((p) => isSameUser(p.id, ownerJid));
             const senderIsAdmin = !!senderData?.admin;
             const senderIsOwner = isSameUser(sender, ownerJid);
+            const isOwnerAndAdmin = senderIsOwner && senderIsAdmin;
 
             if (!senderIsAdmin && !senderIsOwner) {
                 await sock.sendMessage(jid, { text: "Only admins or owner can use !warn." }, { quoted: msg });
                 return;
             }
 
-            if (!botData?.admin && !ownerData?.admin) {
+            // Skip bot permission check if owner is also an admin
+            if (!isOwnerAndAdmin && !botData?.admin && !ownerData?.admin) {
                 await sock.sendMessage(jid, { text: "I need admin rights to manage warnings properly." }, { quoted: msg });
                 return;
             }

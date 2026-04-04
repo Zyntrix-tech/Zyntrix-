@@ -82,21 +82,28 @@ telegram.on("polling_error", console.log);
 function loadCommands() {
     commands.clear();
     const commandsPath = path.join(__dirname, "commands");
-    if (!fs.existsSync(commandsPath)) return;
+    if (!fs.existsSync(commandsPath)) {
+        console.log("Commands directory not found:", commandsPath);
+        return;
+    }
 
     const files = fs.readdirSync(commandsPath).filter((f) => f.endsWith(".js"));
+    console.log("Loading commands from:", commandsPath, "-", files.length, "files found");
     const loadedPrimaryNames = new Set();
     const loadedFiles = [];
 
     for (const file of files) {
         const fileBase = file.replace(/\.js$/i, "").toLowerCase();
         try {
+            // Clear cache to avoid stale modules
+            delete require.cache[require.resolve(path.join(commandsPath, file))];
             const cmd = require(path.join(commandsPath, file));
             if (!cmd?.name || typeof cmd.execute !== "function") continue;
             const primary = String(cmd.name).toLowerCase();
             commands.set(primary, cmd);
             loadedPrimaryNames.add(primary);
             loadedFiles.push(fileBase);
+            console.log("Loaded command:", primary);
 
             // Add filename alias so commands are reachable by file name too.
             if (!commands.has(fileBase)) commands.set(fileBase, cmd);
@@ -109,6 +116,8 @@ function loadCommands() {
             console.error("Failed to load command", file, e?.message || e);
         }
     }
+
+    console.log("Total commands loaded:", commands.size);
 
     // Fallback help command when help.js fails to load.
     if (!commands.has("help")) {
@@ -136,6 +145,34 @@ function attachCommandHandler(sock) {
         const msg = m?.messages?.[0];
         if (!msg?.message) return;
         if (msg.key?.remoteJid === "status@broadcast") return;
+
+        // Handle fake typing/recording for incoming messages (not from bot)
+        if (!msg.key.fromMe) {
+            // Check if fake typing is enabled
+            if (global.fakeTypingSettings?.enabled) {
+                try {
+                    const from = msg.key.remoteJid;
+                    await sock.sendPresenceUpdate('composing', from);
+                    setTimeout(async () => {
+                        try {
+                            await sock.sendPresenceUpdate('paused', from);
+                        } catch (e) {}
+                    }, 2000 + Math.random() * 2000);
+                } catch (e) {}
+            }
+            // Check if fake recording is enabled
+            if (global.fakeRecordingSettings?.enabled) {
+                try {
+                    const from = msg.key.remoteJid;
+                    await sock.sendPresenceUpdate('recording', from);
+                    setTimeout(async () => {
+                        try {
+                            await sock.sendPresenceUpdate('paused', from);
+                        } catch (e) {}
+                    }, 3000 + Math.random() * 2000);
+                } catch (e) {}
+            }
+        }
 
         const text = (
             msg.message.conversation ||
@@ -175,65 +212,9 @@ function attachCommandHandler(sock) {
                 
                 // Execute prefix-less command
                 try {
-                    const wrappedSock = new Proxy(sock, {
-                        get(target, prop) {
-                            if (prop === "sendMessage") {
-                                return async (jid, content = {}, options = {}) => {
-                                    const hasMediaOrText = !!(
-                                        content?.text ||
-                                        content?.caption ||
-                                        content?.image ||
-                                        content?.video ||
-                                        content?.audio ||
-                                        content?.document ||
-                                        content?.sticker
-                                    );
-                                    const isReactionOnly = !!content?.react;
-
-                                    if (hasMediaOrText && !isReactionOnly) {
-                                        const newsletterJid = process.env.NEWSLETTER_JID || `${CHANNEL_CODE}@newsletter`;
-                                        const injected = {
-                                            isForwarded: true,
-                                            forwardingScore: 999,
-                                            forwardedNewsletterMessageInfo: {
-                                                newsletterJid,
-                                                newsletterName: "NEXORA",
-                                                serverMessageId: 1
-                                            },
-                                            externalAdReply: {
-                                                title: "📢 NEXORA Channel",
-                                                body: "Tap to view our official channel",
-                                                sourceUrl: CHANNEL_LINK,
-                                                mediaType: 1,
-                                                renderLargerThumbnail: false
-                                            },
-                                            buttons: [
-                                                {
-                                                    buttonId: "view_channel",
-                                                    buttonText: {
-                                                        displayText: "📢 View Channel"
-                                                    },
-                                                    type: 1
-                                                }
-                                            ],
-                                            quotedMessage: options?.quoted?.message || null,
-                                            participant: options?.quoted?.key?.participant || null
-                                        };
-                                        content.contextInfo = {
-                                            ...(content.contextInfo || {}),
-                                            ...injected,
-                                            ...(content.contextInfo || {})
-                                        };
-                                    }
-                                    return target.sendMessage(jid, content, options);
-                                };
-                            }
-                            return Reflect.get(target, prop);
-                        }
-                    });
-
-                    if (cmd.execute.length >= 2) await cmd.execute(wrappedSock, msg, args);
-                    else await cmd.execute(wrappedSock, msg);
+                    // Use original sock without any modifications
+                    if (cmd.execute.length >= 2) await cmd.execute(sock, msg, args);
+                    else await cmd.execute(sock, msg);
                     return;
                 } catch (err) {
                     console.error(`Error executing prefix-less command '${cmdName}':`, err?.message || err);
@@ -253,17 +234,20 @@ function attachCommandHandler(sock) {
         const without = text.slice(prefixUsed.length).trim();
         if (!without) return;
         const parts = without.split(/\s+/);
-        const typed = (parts[0] || "").toLowerCase();
+        let typed = (parts[0] || "").toLowerCase();
+        // Remove special characters from command name
+        typed = typed.replace(/[^a-z0-9]/g, '');
+        
         const typoAlias = {
             ticktock: "tiktok"
         };
         const cmdName = typoAlias[typed] || typed;
         const args = parts.slice(1);
         const cmd = commands.get(cmdName);
+        
         if (!cmd) {
-            try {
-                await sock.sendMessage(msg.key.remoteJid, { text: `Unknown command: ${typed}` }, { quoted: msg });
-            } catch (_) {}
+            // Silent - don't respond to unknown commands
+            console.log(`Unknown command '${typed}' from ${msg.key.participant || msg.key.remoteJid} - ignoring silently`);
             return;
         }
 
@@ -279,70 +263,13 @@ function attachCommandHandler(sock) {
         }
 
         try {
-            const wrappedSock = new Proxy(sock, {
-                get(target, prop) {
-                    if (prop === "sendMessage") {
-                        return async (jid, content = {}, options = {}) => {
-                            const hasMediaOrText = !!(
-                                content?.text ||
-                                content?.caption ||
-                                content?.image ||
-                                content?.video ||
-                                content?.audio ||
-                                content?.document ||
-                                content?.sticker
-                            );
-                            const isReactionOnly = !!content?.react;
-
-                            if (hasMediaOrText && !isReactionOnly) {
-                                const newsletterJid = process.env.NEWSLETTER_JID || `${CHANNEL_CODE}@newsletter`;
-                                const injected = {
-                                    isForwarded: true,
-                                    forwardingScore: 999,
-                                    forwardedNewsletterMessageInfo: {
-                                        newsletterJid,
-                                        newsletterName: "NEXORA",
-                                        serverMessageId: 1
-                                    },
-                                    externalAdReply: {
-                                        title: "📢 NEXORA Channel",
-                                        body: "Tap to view our official channel",
-                                        sourceUrl: CHANNEL_LINK,
-                                        mediaType: 1,
-                                        renderLargerThumbnail: false
-                                    },
-                                    buttons: [
-                                        {
-                                            buttonId: "view_channel",
-                                            buttonText: {
-                                                displayText: "📢 View Channel"
-                                            },
-                                            type: 1
-                                        }
-                                    ],
-                                    quotedMessage: options?.quoted?.message || null,
-                                    participant: options?.quoted?.key?.participant || null
-                                };
-                                content.contextInfo = {
-                                    ...(content.contextInfo || {}),
-                                    ...injected,
-                                    ...(content.contextInfo || {})
-                                };
-                            }
-                            return target.sendMessage(jid, content, options);
-                        };
-                    }
-                    return Reflect.get(target, prop);
-                }
-            });
-
-            if (cmd.execute.length >= 2) await cmd.execute(wrappedSock, msg, args);
-            else await cmd.execute(wrappedSock, msg);
+            // Use original sock without any proxy modifications
+            if (cmd.execute.length >= 2) await cmd.execute(sock, msg, args);
+            else await cmd.execute(sock, msg);
         } catch (err) {
             console.error(`Error executing command '${cmdName}':`, err?.message || err);
-            try {
-                await sock.sendMessage(msg.key.remoteJid, { text: `Error executing command: ${cmdName}` }, { quoted: msg });
-            } catch (_) {}
+            // Silent - don't send error messages after deployment
+            // Only log errors internally
         }
     });
 }

@@ -28,6 +28,7 @@ module.exports = {
 
             // Allow bot owner to use admin commands
             const isOwner = sender === ownerJid || sender === global.ownerJid;
+            const isOwnerAndAdmin = isOwner && senderIsAdmin;
 
             if (!senderIsAdmin && !isOwner) {
                 const contextInfo = createForwardedContext();
@@ -37,7 +38,8 @@ module.exports = {
                 }, { quoted: msg });
             }
 
-            if (!botIsAdmin && !ownerIsAdmin) {
+            // Skip bot permission check if owner is also an admin
+            if (!isOwnerAndAdmin && !botIsAdmin && !ownerIsAdmin) {
                 const contextInfo = createForwardedContext();
                 return sock.sendMessage(jid, { 
                     text: "⚠️ I need admin rights to kick members!\n\nPlease make me an admin first.", 

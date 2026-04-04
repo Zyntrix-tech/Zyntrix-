@@ -22,12 +22,14 @@ module.exports = {
             const ownerData = participants.find((p) => isSameUser(p.id, ownerJid));
             const senderIsAdmin = !!senderData?.admin;
             const isOwner = isSameUser(sender, ownerJid);
+            const isOwnerAndAdmin = isOwner && senderIsAdmin;
 
             if (!senderIsAdmin && !isOwner) {
                 await sock.sendMessage(jid, { text: "Only admins or the bot owner can use !demote." }, { quoted: msg });
                 return;
             }
-            if (!botData?.admin && !ownerData?.admin) {
+            // Skip bot permission check if owner is also an admin
+            if (!isOwnerAndAdmin && !botData?.admin && !ownerData?.admin) {
                 await sock.sendMessage(jid, { text: "I need admin rights (or owner must be admin) to demote users." }, { quoted: msg });
                 return;
             }

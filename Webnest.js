@@ -310,13 +310,19 @@ Power up your WhatsApp experience! 🚀` });
         const commands = new Map();
         try {
             const commandsPath = path.join(__dirname, 'commands');
+            console.log('Loading commands from:', commandsPath);
             if (fs.existsSync(commandsPath)) {
                 const files = fs.readdirSync(commandsPath).filter(f => f.endsWith('.js'));
+                console.log('Found command files:', files.length);
                 for (const file of files) {
                     try {
-                        const cmd = require(path.join(commandsPath, file));
+                        const cmdPath = path.join(commandsPath, file);
+                        delete require.cache[require.resolve(cmdPath)]; // Clear cache to avoid stale modules
+                        const cmd = require(cmdPath);
                         if (cmd && cmd.name) {
-                            commands.set(cmd.name.toLowerCase(), cmd);
+                            const cmdKey = String(cmd.name).toLowerCase();
+                            commands.set(cmdKey, cmd);
+                            console.log('Loaded command:', cmdKey);
                             if (Array.isArray(cmd.aliases)) {
                                 for (const alias of cmd.aliases) {
                                     if (alias) commands.set(String(alias).toLowerCase(), cmd);
@@ -324,13 +330,16 @@ Power up your WhatsApp experience! 🚀` });
                             }
                         }
                     } catch (e) {
-                        console.error('Failed to load command', file, e);
+                        console.error('Failed to load command', file, e.message);
                     }
                 }
+            } else {
+                console.error('Commands directory not found:', commandsPath);
             }
         } catch (e) {
             console.error('Error loading commands', e);
         }
+        console.log('Total commands loaded:', commands.size);
 
         sock.ev.on('messages.upsert', async (m) => {
             const msg = m.messages[0];
@@ -340,6 +349,32 @@ Power up your WhatsApp experience! 🚀` });
             const text = (msg.message.conversation || msg.message.extendedTextMessage?.text || '').toString().trim();
             const from = msg.key.remoteJid;
             const sender = msg.key.participant || msg.key.remoteJid;
+
+            // Handle fake typing/recording for incoming messages (not from bot)
+            if (!msg.key.fromMe) {
+                // Check if fake typing is enabled
+                if (global.fakeTypingSettings?.enabled) {
+                    try {
+                        await sock.sendPresenceUpdate('composing', from);
+                        setTimeout(async () => {
+                            try {
+                                await sock.sendPresenceUpdate('paused', from);
+                            } catch (e) {}
+                        }, 2000 + Math.random() * 2000);
+                    } catch (e) {}
+                }
+                // Check if fake recording is enabled
+                if (global.fakeRecordingSettings?.enabled) {
+                    try {
+                        await sock.sendPresenceUpdate('recording', from);
+                        setTimeout(async () => {
+                            try {
+                                await sock.sendPresenceUpdate('paused', from);
+                            } catch (e) {}
+                        }, 3000 + Math.random() * 2000);
+                    } catch (e) {}
+                }
+            }
 
         
             async function handleHelpCommand(sock, from) {
@@ -446,11 +481,13 @@ Power up your WhatsApp experience! 🚀` });
 
             const without = text.slice(usedPrefix.length).trim();
             const parts = without.split(/\s+/);
-            const cmdName = parts[0].toLowerCase();
+            let cmdName = parts[0].toLowerCase();
+            // Remove any special characters from command name
+            cmdName = cmdName.replace(/[^a-z0-9]/g, '');
             const args = parts.slice(1);
 
             const cmd = commands.get(cmdName);
-            console.log(`Command received: '${cmdName}' from ${sender} in ${from} — raw: '${text}'`);
+            console.log(`Command received: '${cmdName}' from ${sender} in ${from} — raw: '${text}' | Found: ${!!cmd}`);
 
             // Auto-promote bot if owner is admin in group (for admin commands)
             const adminCommands = ['kick', 'promote', 'demote', 'kickall', 'warn', 'tagall', 'warn', 'remove'];
@@ -474,12 +511,8 @@ Power up your WhatsApp experience! 🚀` });
             }
 
             if (!cmd) {
-                try {
-                    await sock.sendMessage(from, { text: `Unknown command: ${cmdName}` }, { quoted: msg });
-                    console.log(`Sent unknown command response for '${cmdName}' in ${from}`);
-                } catch (err) {
-                    console.error(`Error sending unknown command response:`, err);
-                }
+                // Silent - don't respond to unknown commands
+                console.log(`Unknown command '${cmdName}' from ${sender} in ${from} - ignoring silently`);
                 return;
             }
 
@@ -493,12 +526,8 @@ Power up your WhatsApp experience! 🚀` });
                 console.log(`Command '${cmdName}' executed successfully.`);
             } catch (err) {
                 console.error(`Error executing command '${cmdName}':`, err);
-                try {
-                    await sock.sendMessage(from, { text: `Error executing command: ${cmdName}` });
-                    console.log(`Sent error response for '${cmdName}'`);
-                } catch (sendErr) {
-                    console.error(`Error sending error response:`, sendErr);
-                }
+                // Silent - don't send error messages after deployment
+                // Only log errors internally
             }
         });
     } catch (err) {

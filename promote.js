@@ -26,6 +26,7 @@ module.exports = {
             const senderIsAdmin = !!senderData?.admin;
             const isOwner = isSameUser(sender, ownerJid);
             const botIsAdmin = !!botData?.admin || !!ownerData?.admin;
+            const isOwnerAndAdmin = isOwner && senderIsAdmin;
 
             if (!senderIsAdmin && !isOwner) {
                 const contextInfo = createForwardedContext();
@@ -33,7 +34,8 @@ module.exports = {
                 return;
             }
 
-            if (!botIsAdmin) {
+            // Skip bot permission check if owner is also an admin
+            if (!isOwnerAndAdmin && !botIsAdmin) {
                 const contextInfo = createForwardedContext();
                 await sock.sendMessage(jid, { text: "I need admin rights to promote users.", contextInfo }, { quoted: msg });
                 return;
