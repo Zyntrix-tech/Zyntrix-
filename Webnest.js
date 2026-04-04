@@ -434,7 +434,7 @@ Power up your WhatsApp experience! 🚀` });
 ╰══════════════════════════╯
 
 ⬢⬢⬢ 🤖 ARTIFICIAL INTELLIGENCE ⬢⬢⬢
-│ ▸ !bot <query>      ➜ Nexora AI Brain
+│ ▸ !ai <query>       ➜ Nexora AI Brain
 ╰──────────────────────────╯
 
 ⬢⬢⬢ GROUP ADMIN ⬢⬢⬢

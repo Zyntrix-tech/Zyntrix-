@@ -14,7 +14,7 @@ module.exports = {
 
 📖 General
 !help → Full menu
-!bot → AI chat
+!ai → AI chat
 !ping → Check latency
 
 👑 Admin

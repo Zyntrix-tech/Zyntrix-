@@ -7,7 +7,7 @@ const CHANNEL_CODE = '0029VbCFEZv60eBdlqXqQz20';
 // Command categories
 const CATEGORIES = {
     general: [
-        'help', 'menu', 'ping', 'alive', 'uptime', 'bot', 'darkai', 'retro', 'gstatus',
+        'help', 'menu', 'ping', 'alive', 'uptime', 'ai', 'darkai', 'retro', 'gstatus',
         'joke', 'meme', 'quote', 'dadjoke', 'devjoke', 'fact', 'sciencefact', 'historyfact',
         'techfact', 'food', 'animal', 'spacefact', 'motivation', 'trivia', 'riddle', 'todayspecial',
         'wyr', 'neverhave', 'truth', 'ttt', 'rps', 'slot', '8ball', 'ship', 'choose', 'shuffle',

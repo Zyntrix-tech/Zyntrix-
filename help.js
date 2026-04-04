@@ -124,7 +124,7 @@ module.exports = {
 ╭─〔 ⚡ GENERAL 〕─╮
 │ ⌬ !help      → Open command menu
 │ ⌬ !menu      → All commands list
-│ ⌬ !bot       → Nexora AI chat
+│ ⌬ !ai        → Nexora AI chat
 │ ⌬ !darkai    → Dark horror AI
 │ ⌬ !retro     → Retro style text
 ╰──────────────╯
