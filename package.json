@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "main": "backend/bots/index.js",
     "scripts": {
-        "start": "bot.js",
-        "bot": "bot.js",
-        "bot:win": "bot.js",
+        "start": "telegram.js",
+        "bot": "telegram.js",
+        "bot:win": "telegram.js",
         "clean:auth": "node -e \"require('fs').rmSync('backend/bots/auth_info',{recursive:true,force:true});console.log('auth_info cleaned')\"",
         "bot:fresh": "npm run clean:auth && npm run bot"
     },
