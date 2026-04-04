@@ -1,5 +1,4 @@
-﻿console.log("Telegram Bot started.."); 
-const TelegramBot = require("node-telegram-bot-api");
+﻿const TelegramBot = require("node-telegram-bot-api");
 const {
     default: makeWASocket,
     useMultiFileAuthState,
@@ -40,6 +39,13 @@ if (!token) {
     throw new Error("Missing BOT_TOKEN or TELEGRAM_BOT_TOKEN in backend/bots/.env");
 }
 
+process.on('unhandledRejection', (reason) => {
+    console.error('Unhandled Rejection:', reason?.message || reason);
+});
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err?.message || err);
+});
+
 const telegram = new TelegramBot(token, { polling: true });
 const SESSIONS_DIR = path.join(__dirname, "sessions");
 fs.ensureDirSync(SESSIONS_DIR);
@@ -48,6 +54,8 @@ const activeSockets = new Map();
 const qrMessages = new Map();
 const userState = {};
 const commands = new Map();
+const sessionConnectionStates = new Map();
+const sessionNotificationState = new Map();
 global.chatModes = global.chatModes || {};
 global.botStartTime = global.botStartTime || Date.now();
 const CHANNEL_LINK = "https://whatsapp.com/channel/0029VbCFEZv60eBdlqXqQz20";
@@ -76,7 +84,7 @@ try {
         userPrefixHelpers = prefixCmd;
     }
 } catch (e) {
-    console.log("User prefix system not loaded yet");
+    // User prefix helper unavailable
 }
 
 // Reload prefix module when commands are reloaded
@@ -92,7 +100,7 @@ function loadUserPrefixHelpers() {
     }
 }
 
-telegram.on("polling_error", console.log);
+telegram.on("polling_error", () => {});
 
 function resolveCommandsPath() {
     const pathsToTry = [
@@ -104,7 +112,6 @@ function resolveCommandsPath() {
     ];
     for (const tryPath of pathsToTry) {
         if (fs.existsSync(tryPath)) {
-            console.log("Found commands directory:", tryPath);
             return tryPath;
         }
     }
@@ -118,7 +125,6 @@ function loadCommands() {
     let filesToLoad = [];
     
     if (!commandsPath) {
-        console.log("Commands folder not found. Searching for scattered command files...");
         const searchPaths = [
             __dirname,
             path.join(__dirname, ".."),
@@ -132,7 +138,6 @@ function loadCommands() {
                 if (fs.existsSync(searchPath)) {
                     const found = fs.readdirSync(searchPath).filter((f) => f.endsWith(".js") && f !== "telegram.js" && f !== "index.js" && f !== "bot.js");
                     if (found.length > 0) {
-                        console.log(`Found ${found.length} command files in:`, searchPath);
                         filesToLoad = found.map(f => ({ name: f, path: path.join(searchPath, f) }));
                         commandsPath = searchPath;
                         break;
@@ -151,7 +156,6 @@ function loadCommands() {
         filesToLoad = fs.readdirSync(commandsPath).filter((f) => f.endsWith(".js")).map(f => ({ name: f, path: path.join(commandsPath, f) }));
     }
     
-    console.log("Loading commands from:", commandsPath || "scattered locations", "-", filesToLoad.length, "files found");
     const loadedPrimaryNames = new Set();
     const loadedFiles = [];
 
@@ -167,7 +171,6 @@ function loadCommands() {
             commands.set(primary, cmd);
             loadedPrimaryNames.add(primary);
             loadedFiles.push(fileBase);
-            console.log("Loaded command:", primary);
 
             if (!commands.has(fileBase)) commands.set(fileBase, cmd);
             if (Array.isArray(cmd.aliases)) {
@@ -179,8 +182,6 @@ function loadCommands() {
             console.error("Failed to load command", fileName, e?.message || e);
         }
     }
-
-    console.log("Total commands loaded:", commands.size);
 
     if (!commands.has("help")) {
         const helpCmd = {
@@ -307,8 +308,6 @@ function attachCommandHandler(sock) {
         const cmd = commands.get(cmdName);
         
         if (!cmd) {
-            // Silent - don't respond to unknown commands
-            console.log(`Unknown command '${typed}' from ${msg.key.participant || msg.key.remoteJid} - ignoring silently`);
             return;
         }
 
@@ -439,8 +438,7 @@ async function handleQRLink(chatId) {
 
 async function startWhatsAppSession(tgChatId, identifier, usePairing) {
     const sessionPath = path.join(SESSIONS_DIR, identifier);
-    console.log(`[INIT] Starting: ${identifier}`);
-
+    // Starting session for:
     try {
         const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
         let version;
@@ -465,15 +463,22 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
         sock.ev.removeAllListeners("messages.upsert");
         
         activeSockets.set(identifier, sock);
+        sessionConnectionStates.set(identifier, "starting");
+        sessionNotificationState.set(identifier, {
+            qrSent: 0,
+            pairingSent: false,
+            expiredSent: false,
+            logoutSent: false,
+            errorSent: false,
+            connectedSent: false
+        });
         attachCommandHandler(sock);
 
         if (usePairing && !state.creds.registered && tgChatId) {
-            console.log("[PAIRING] Waiting 6s...");
-            setTimeout(async () => {
+                setTimeout(async () => {
                 try {
                     const code = await sock.requestPairingCode(identifier);
                     const formattedCode = code?.match(/.{1,4}/g)?.join("-") || code;
-                    console.log(`[PAIRING] Code: ${formattedCode}`);
                     
                     // Check cooldown for pairing messages
                     const lastPairing = connectionMessageCooldown.get(`pairing_${tgChatId}`);
@@ -508,17 +513,22 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
 
         sock.ev.on("connection.update", async (update) => {
             const { connection, lastDisconnect, qr } = update;
+            const prevConnection = sessionConnectionStates.get(identifier);
+            const sessionState = sessionNotificationState.get(identifier) || {
+                qrSent: 0,
+                pairingSent: false,
+                expiredSent: false,
+                logoutSent: false,
+                errorSent: false,
+                connectedSent: false
+            };
+            if (connection && prevConnection !== connection) {
+                sessionConnectionStates.set(identifier, connection);
+            }
 
             if (qr && tgChatId && !usePairing) {
                 qrCount++;
-                if (qrCount > 5) {
-                    // Check cooldown for QR expired messages
-                    const lastExpired = connectionMessageCooldown.get(`expired_${tgChatId}`);
-                    const now = Date.now();
-                    if (!lastExpired || (now - lastExpired) > WELCOME_COOLDOWN) {
-                        connectionMessageCooldown.set(`expired_${tgChatId}`, now);
-                        telegram.sendMessage(tgChatId, "⏰ *QR expired.* /link for new one.", { parse_mode: "Markdown" });
-                    }
+                if (sessionState.qrSent >= 2) {
                     return;
                 }
 
@@ -528,13 +538,15 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
                     if (prev) telegram.deleteMessage(tgChatId, prev).catch(() => {});
 
                     const sent = await telegram.sendPhoto(tgChatId, qrBuf, {
-                        caption: `📱 *Scan QR* — WhatsApp → Linked Devices\n🔄 ${qrCount}/5`,
+                        caption: `📱 *Scan QR* — WhatsApp → Linked Devices\n🔄 ${qrCount}/2`,
                         parse_mode: "Markdown",
                         reply_markup: {
                             inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]]
                         }
                     });
                     qrMessages.set(tgChatId, sent.message_id);
+                    sessionState.qrSent += 1;
+                    sessionNotificationState.set(identifier, sessionState);
                 } catch (e) {
                     console.error("QR err:", e.message);
                 }
@@ -542,7 +554,8 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
 
             if (connection === "close") {
                 const reason = lastDisconnect?.error?.output?.statusCode;
-                console.log(`[${identifier}] Closed: ${reason}`);
+                sessionState.connectedSent = false;
+                sessionNotificationState.set(identifier, sessionState);
 
                 if (reason !== DisconnectReason.loggedOut && reason !== 401) {
                     // Clean up old socket before creating new one
@@ -551,7 +564,7 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
                         sock.ws.close();
                         sock.end();
                     } catch (_) {}
-                    startWhatsAppSession(tgChatId, identifier, false);
+                    setTimeout(() => startWhatsAppSession(tgChatId, identifier, false), 5000);
                 } else {
                     // Check cooldown for logout messages
                     const lastLogout = connectionMessageCooldown.get(`logout_${tgChatId}`);
@@ -563,8 +576,10 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
                     fs.removeSync(sessionPath);
                     activeSockets.delete(identifier);
                 }
-            } else if (connection === "open") {
-                console.log(`[${identifier}] ONLINE!`);
+            } else if (connection === "open" && !sessionState.connectedSent) {
+                sessionState.connectedSent = true;
+                sessionNotificationState.set(identifier, sessionState);
+
                 try {
                     const me = (sock.user?.id || "").split(":")[0];
                     const myJid = `${me}@s.whatsapp.net`;
@@ -573,7 +588,6 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
                     // Auto-set owner on first connection (only once)
                     if (!global.ownerJid) {
                         global.ownerJid = myJid;
-                        console.log(`[OWNER] Auto-set owner: ${myJid}`);
                         // Send welcome message to new owner (only once)
                         await sock.sendMessage(myJid, {
                             text: `👋 *Welcome to Nexora!*
