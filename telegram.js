@@ -1,104 +1,174 @@
-// --- At the top, keep your activeSockets and qrMessages maps as-is ---
+console.log("Telegram Bot started..");
+
+const TelegramBot = require("node-telegram-bot-api");
+const {
+    default: makeWASocket,
+    useMultiFileAuthState,
+    fetchLatestBaileysVersion,
+    DisconnectReason,
+    Browsers
+} = require("@whiskeysockets/baileys");
+
+const fs = require("fs-extra");
+const path = require("path");
+const QRCode = require("qrcode");
+
+require("dotenv").config();
+
+const token = process.env.BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
+if (!token) throw new Error("Missing BOT_TOKEN");
+
+const telegram = new TelegramBot(token, { polling: true });
+
+const SESSIONS_DIR = path.join(__dirname, "sessions");
+fs.ensureDirSync(SESSIONS_DIR);
+
 const activeSockets = new Map();
 const qrMessages = new Map();
+const userState = {};
 
-// --- Modify startWhatsAppSession minimally ---
-async function startWhatsAppSession(tgChatId, identifier, usePairing) {
-    const sessionPath = path.join(SESSIONS_DIR, identifier);
-    console.log(`[INIT] Starting: ${identifier}`);
+// ===================== COMMAND HANDLER FIX =====================
+function attachCommandHandler(sock) {
+    if (sock._hasHandler) return; // 🔥 prevents duplicate listeners
+    sock._hasHandler = true;
 
-    // Prevent multiple sessions for same identifier
-    if (activeSockets.has(identifier)) {
-        const oldSock = activeSockets.get(identifier);
-        try { oldSock.ev.removeAllListeners(); oldSock.ws.close(); oldSock.end(); } catch (_) {}
-        activeSockets.delete(identifier);
+    sock.ev.on("messages.upsert", async (m) => {
+        const msg = m?.messages?.[0];
+        if (!msg?.message) return;
+        if (msg.key?.remoteJid === "status@broadcast") return;
+
+        const text =
+            msg.message.conversation ||
+            msg.message.extendedTextMessage?.text ||
+            "";
+
+        if (!text) return;
+
+        console.log("Received:", text);
+    });
+}
+
+// ===================== START =====================
+telegram.onText(/\/start/, (msg) => {
+    telegram.sendMessage(
+        msg.chat.id,
+        "👋 Tap below to link WhatsApp",
+        {
+            reply_markup: {
+                inline_keyboard: [
+                    [{ text: "🔗 QR", callback_data: "link_qr" }],
+                    [{ text: "📱 Number", callback_data: "link_pair" }]
+                ]
+            }
+        }
+    );
+});
+
+// ===================== BUTTONS =====================
+telegram.on("callback_query", async (q) => {
+    const chatId = q.message.chat.id;
+    await telegram.answerCallbackQuery(q.id);
+
+    if (q.data === "link_qr") return handleQRLink(chatId);
+
+    if (q.data === "link_pair") {
+        userState[chatId] = "WAITING_NUM";
+        return telegram.sendMessage(chatId, "Send number: 234XXXXXXXXXX");
     }
+});
 
-    try {
-        const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
-        let version;
-        try { version = (await fetchLatestBaileysVersion()).version; } 
-        catch { version = [2, 3000, 1027934701]; }
+// ===================== MESSAGE FIX =====================
+telegram.on("message", (msg) => {
+    if (!msg.text) return;
+    if (msg.from?.is_bot) return;
 
-        const sock = makeWASocket({
-            version,
-            printQRInTerminal: false,
-            auth: state,
-            browser: Browsers.ubuntu("Chrome"),
-            markOnlineOnConnect: false,
-            generateHighQualityLinkPreview: true,
-            syncFullHistory: false,
-            connectTimeoutMs: 60000
-        });
+    const chatId = msg.chat.id;
 
-        // Remove old listeners only for messages
-        sock.ev.removeAllListeners("messages.upsert");
+    console.log("STATE:", userState[chatId], "TEXT:", msg.text);
 
-        activeSockets.set(identifier, sock);
-        attachCommandHandler(sock);
+    if (userState[chatId] === "WAITING_NUM") {
+        const number = msg.text.replace(/\D/g, "");
 
-        // Pairing code logic stays untouched
-        if (usePairing && !state.creds.registered && tgChatId) {
-            setTimeout(async () => {
-                try {
-                    const code = await sock.requestPairingCode(identifier);
-                    const formattedCode = code?.match(/.{1,4}/g)?.join("-") || code;
-                    telegram.sendMessage(tgChatId,
-                        `*YOUR CODE:*\n\`${formattedCode}\`\n\n_(Tap to copy)_`,
-                        { parse_mode: "Markdown" }
-                    );
-                } catch (e) {
-                    console.error("[PAIRING]", e);
-                    telegram.sendMessage(tgChatId, "❌  Error. Try /link for QR instead.");
-                }
-            }, 6000);
+        if (!number.startsWith("234")) {
+            return telegram.sendMessage(chatId, "❌ Use: 234XXXXXXXXXX");
         }
 
-        // --- FIX: limit QR spamming ---
-        let qrSent = false; // <- only send 1 QR per session
+        if (number.length < 12) {
+            return telegram.sendMessage(chatId, "❌ Invalid number");
+        }
 
-        sock.ev.on("connection.update", async (update) => {
-            const { connection, lastDisconnect, qr } = update;
+        delete userState[chatId];
 
-            if (qr && tgChatId && !usePairing) {
-                if (qrSent) return; // stop multiple QR sends
-                qrSent = true;
+        telegram.sendMessage(chatId, `Processing +${number}...`);
 
-                try {
-                    const qrBuf = await QRCode.toBuffer(qr, { type: "png", width: 512, margin: 2 });
-                    const prev = qrMessages.get(tgChatId);
-                    if (prev) telegram.deleteMessage(tgChatId, prev).catch(() => {});
-                    
-                    const sent = await telegram.sendPhoto(tgChatId, qrBuf, {
-                        caption: `📱 *Scan QR* — WhatsApp → Linked Devices`,
-                        parse_mode: "Markdown",
-                        reply_markup: { inline_keyboard: [[{ text: "❌ Cancel", callback_data: "cancel" }]] }
-                    });
-                    qrMessages.set(tgChatId, sent.message_id);
-                } catch (e) {
-                    console.error("QR err:", e.message);
-                }
-            }
-
-            if (connection === "close") {
-                const reason = lastDisconnect?.error?.output?.statusCode;
-                console.log(`[${identifier}] Closed: ${reason}`);
-
-                if (reason !== DisconnectReason.loggedOut && reason !== 401) {
-                    try { sock.ev.removeAllListeners(); sock.ws.close(); sock.end(); } catch (_) {}
-                    startWhatsAppSession(tgChatId, identifier, false);
-                } else {
-                    if (tgChatId) telegram.sendMessage(tgChatId, "⚠️ Logged Out. /link to reconnect.").catch(() => {});
-                    fs.removeSync(sessionPath);
-                    activeSockets.delete(identifier);
-                }
-            } else if (connection === "open") {
-                console.log(`[${identifier}] ONLINE!`);
-            }
-        });
-
-    } catch (e) {
-        console.error(`[${identifier}] Failed to start session:`, e.message || e);
-        if (tgChatId) telegram.sendMessage(tgChatId, "❌ Failed to start WhatsApp session.");
+        startWhatsAppSession(chatId, number, true);
     }
+});
+
+// ===================== QR =====================
+async function handleQRLink(chatId) {
+    startWhatsAppSession(chatId, String(chatId), false);
+}
+
+// ===================== MAIN SESSION =====================
+async function startWhatsAppSession(chatId, id, pairing) {
+    const sessionPath = path.join(SESSIONS_DIR, id);
+
+    // 🔥 CLEAN OLD SOCKET
+    if (activeSockets.has(id)) {
+        const old = activeSockets.get(id);
+        try {
+            old.ev.removeAllListeners();
+            old.ws.close();
+            old.end();
+        } catch {}
+        activeSockets.delete(id);
+    }
+
+    const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
+
+    const sock = makeWASocket({
+        auth: state,
+        browser: Browsers.ubuntu("Chrome")
+    });
+
+    activeSockets.set(id, sock);
+    attachCommandHandler(sock);
+
+    // ================= QR =================
+    sock.ev.on("connection.update", async (update) => {
+        const { connection, qr } = update;
+
+        if (qr && !pairing) {
+            const qrImg = await QRCode.toBuffer(qr);
+
+            const sent = await telegram.sendPhoto(chatId, qrImg, {
+                caption: "Scan QR"
+            });
+
+            qrMessages.set(chatId, sent.message_id);
+        }
+
+        if (connection === "open") {
+            telegram.sendMessage(chatId, "✅ Connected!");
+        }
+
+        if (connection === "close") {
+            console.log("Connection closed");
+        }
+    });
+
+    // ================= PAIRING =================
+    if (pairing && !state.creds.registered) {
+        setTimeout(async () => {
+            try {
+                const code = await sock.requestPairingCode(id);
+                telegram.sendMessage(chatId, `CODE: ${code}`);
+            } catch {
+                telegram.sendMessage(chatId, "Pairing failed");
+            }
+        }, 5000);
+    }
+
+    sock.ev.on("creds.update", saveCreds);
 }
