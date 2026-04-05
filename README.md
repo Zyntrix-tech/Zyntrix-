@@ -1,1 +1,1 @@
-# Zyntrix-
+# Zyntrix
