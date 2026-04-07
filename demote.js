@@ -1,4 +1,4 @@
-const { isSameUser } = require("../utils/identity");
+﻿const { isSameUser } = require("../utils/identity");
 
 module.exports = {
     name: "demote",

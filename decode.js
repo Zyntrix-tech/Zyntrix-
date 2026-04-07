@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const base64Decode = (str) => {
     try {
@@ -32,7 +32,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: `🔓 *Decode Tool*\n\n*Usage:* !decode <encoded_text>\n\nTries to decode Base64, Hex, and URL encoded text.\n\n*Example:* !decode aGVsbG8=`,
+                text: `≡ƒöô *Decode Tool*\n\n*Usage:* !decode <encoded_text>\n\nTries to decode Base64, Hex, and URL encoded text.\n\n*Example:* !decode aGVsbG8=`,
                 contextInfo
             }, { quoted: msg });
             return;
@@ -75,10 +75,10 @@ module.exports = {
 
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `🔓 *Decoded (${type}):*\n\n\`${result}\``,
+            text: `≡ƒöô *Decoded (${type}):*\n\n\`${result}\``,
             contextInfo
         }, { quoted: msg });
         
-        await sock.sendMessage(from, { react: { text: '🔓', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒöô', key: msg.key } });
     }
 };

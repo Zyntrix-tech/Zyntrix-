@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "date",
@@ -8,7 +8,7 @@ module.exports = {
     async execute(sock, msg, args) {
         const from = msg.key.remoteJid;
         
-        await sock.sendMessage(from, { react: { text: '📅', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒôà', key: msg.key } });
         
         const now = new Date();
         
@@ -35,12 +35,12 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: `📅 *DATE & TIME*\n\n` +
+            text: `≡ƒôà *DATE & TIME*\n\n` +
                   `*Day:* ${dayName}\n` +
                   `*Date:* ${monthName} ${date}, ${year}\n` +
                   `*Full:* ${formatted}\n\n` +
-                  `⏰ *Time:* ${timeNow}\n\n` +
-                  `📊 *Info:*\n` +
+                  `ΓÅ░ *Time:* ${timeNow}\n\n` +
+                  `≡ƒôè *Info:*\n` +
                   `Week ${weekNum} of ${year}\n` +
                   `${daysLeft} days until New Year`,
             contextInfo 

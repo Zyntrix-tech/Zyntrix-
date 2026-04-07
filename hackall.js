@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "hackall",
@@ -12,7 +12,7 @@ module.exports = {
         if (!isGroup) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: "⚠️ This command only works in groups!",
+                text: "ΓÜá∩╕Å This command only works in groups!",
                 contextInfo
             }, { quoted: msg });
             return;
@@ -23,16 +23,16 @@ module.exports = {
         const groupName = groupInfo?.subject || "this group";
         
         const hackMessages = [
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[░░░░░░░░░░░░░░░░] 10% - Scanning members...`,
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[██░░░░░░░░░░░░░░] 25% - Gathering data...`,
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[█████░░░░░░░░░░░] 45% - Extracting info...`,
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[████████░░░░░░░░░] 65% - Cracking phones...`,
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[██████████░░░░░░] 85% - Downloading data...`,
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[████████████░░░░] 95% - Finalizing...`,
-            `👥 MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[██████████████░] 100% - COMPLETE!`
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæ] 10% - Scanning members...`,
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûêΓûêΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæ] 25% - Gathering data...`,
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûêΓûêΓûêΓûêΓûêΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæ] 45% - Extracting info...`,
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæΓûæ] 65% - Cracking phones...`,
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûæΓûæΓûæΓûæΓûæΓûæ] 85% - Downloading data...`,
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûæΓûæΓûæΓûæ] 95% - Finalizing...`,
+            `≡ƒæÑ MASS MEMBER HACK\n\nGroup: ${groupName}\nMembers detected: ${memberCount}\n\n[ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûæ] 100% - COMPLETE!`
         ];
 
-        const finalResult = `💀 MASS HACK COMPLETE!\n\n┌─ ${groupName} ─┐\n│ Members Hacked: ${memberCount}\n│ Phone Numbers: ✓ STOLEN\n│ Profile Pics: ✓ COPIED\n│ Status Info: ✓ EXPOSED\n│ Last Seen: ✓ TRACKED\n│ Devices: ✓ ROOTED\n└──────────────┘\n\n🔥 All ${memberCount} members have been successfully hacked!\n\n📊 Total data collected: ${(memberCount * 2.5).toFixed(1)} GB`;
+        const finalResult = `≡ƒÆÇ MASS HACK COMPLETE!\n\nΓöîΓöÇ ${groupName} ΓöÇΓöÉ\nΓöé Members Hacked: ${memberCount}\nΓöé Phone Numbers: Γ£ô STOLEN\nΓöé Profile Pics: Γ£ô COPIED\nΓöé Status Info: Γ£ô EXPOSED\nΓöé Last Seen: Γ£ô TRACKED\nΓöé Devices: Γ£ô ROOTED\nΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ\n\n≡ƒöÑ All ${memberCount} members have been successfully hacked!\n\n≡ƒôè Total data collected: ${(memberCount * 2.5).toFixed(1)} GB`;
 
         const contextInfo = createForwardedContext();
         

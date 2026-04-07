@@ -1,4 +1,4 @@
-module.exports = {
+﻿module.exports = {
     name: "emojimix",
 
     async execute(sock, msg, args = []) {

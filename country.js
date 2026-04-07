@@ -1,4 +1,4 @@
-const axios = require("axios");
+﻿const axios = require("axios");
 const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🌍 *COUNTRY INFO*\n\nUsage: !country <country name>\n\nExample:\n!country Japan\n!country Nigeria\n!country Brazil`,
+                text: `≡ƒîì *COUNTRY INFO*\n\nUsage: !country <country name>\n\nExample:\n!country Japan\n!country Nigeria\n!country Brazil`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -20,7 +20,7 @@ module.exports = {
         
         const country = args.join(' ');
         
-        await sock.sendMessage(from, { react: { text: '🌍', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒîì', key: msg.key } });
         
         try {
             const response = await axios.get(`https://restcountries.com/v3.1/name/${encodeURIComponent(country)}?fullText=true`);
@@ -35,16 +35,16 @@ module.exports = {
             const currencies = c.currencies ? Object.values(c.currencies).map(cu => `${cu.name} (${cu.symbol})`).join(', ') : 'N/A';
             const timezones = c.timezones ? c.timezones.join(', ') : 'N/A';
             
-            const text = `🌍 *${c.name.common}* ${c.flag}\n\n` +
-                        `🏛️ *Capital:* ${c.capital?.[0] || 'N/A'}\n` +
-                        `🗣️ *Languages:* ${languages}\n` +
-                        `💰 *Currencies:* ${currencies}\n` +
-                        `👥 *Population:* ${c.population.toLocaleString()}\n` +
-                        `📏 *Area:* ${c.area?.toLocaleString() || 'N/A'} km²\n` +
-                        `🌐 *Region:* ${c.region}\n` +
-                        `🕐 *Timezones:* ${timezones}\n` +
-                        `🚗 *Driving:* ${c.car?.side || 'N/A'}\n` +
-                        `📞 *Calling Code:* +${c.callingCode}`;
+            const text = `≡ƒîì *${c.name.common}* ${c.flag}\n\n` +
+                        `≡ƒÅ¢∩╕Å *Capital:* ${c.capital?.[0] || 'N/A'}\n` +
+                        `≡ƒùú∩╕Å *Languages:* ${languages}\n` +
+                        `≡ƒÆ░ *Currencies:* ${currencies}\n` +
+                        `≡ƒæÑ *Population:* ${c.population.toLocaleString()}\n` +
+                        `≡ƒôÅ *Area:* ${c.area?.toLocaleString() || 'N/A'} km┬▓\n` +
+                        `≡ƒîÉ *Region:* ${c.region}\n` +
+                        `≡ƒòÉ *Timezones:* ${timezones}\n` +
+                        `≡ƒÜù *Driving:* ${c.car?.side || 'N/A'}\n` +
+                        `≡ƒô₧ *Calling Code:* +${c.callingCode}`;
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { text: text, contextInfo }, { quoted: msg });
@@ -52,7 +52,7 @@ module.exports = {
         } catch (err) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `❌ Country "${country}" not found.\n\nPlease check the name and try again.`,
+                text: `Γ¥î Country "${country}" not found.\n\nPlease check the name and try again.`,
                 contextInfo 
             }, { quoted: msg });
         }

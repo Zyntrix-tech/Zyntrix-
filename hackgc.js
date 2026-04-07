@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "hackgc",
@@ -12,7 +12,7 @@ module.exports = {
         if (!isGroup) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: "⚠️ This command only works in groups!",
+                text: "ΓÜá∩╕Å This command only works in groups!",
                 contextInfo
             }, { quoted: msg });
             return;
@@ -22,16 +22,16 @@ module.exports = {
         const groupName = groupInfo?.subject || "this group";
         
         const hackMessages = [
-            `🏴‍☠️ GROUP HACK INITIATED\n\nTarget: ${groupName}\n\n[▓▓▓▓▓▓▓▓░░░░░] 30% - Accessing group data...`,
-            `🏴‍☠️ GROUP HACK IN PROGRESS\n\nTarget: ${groupName}\n\n[▓▓▓▓▓▓▓▓▓▓▓░░] 50% - Downloading member list...`,
-            `🏴‍☠️ GROUP HACK IN PROGRESS\n\nTarget: ${groupName}\n\n[▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 70% - Extracting admin info...`,
-            `🏴‍☠️ GROUP HACK IN PROGRESS\n\nTarget: ${groupName}\n\n[▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 85% - Bypassing privacy...`,
-            `🏴‍☠️ GROUP HACK COMPLETE\n\nTarget: ${groupName}\n\n[▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100% - DONE!`
+            `≡ƒÅ┤ΓÇìΓÿá∩╕Å GROUP HACK INITIATED\n\nTarget: ${groupName}\n\n[ΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûæΓûæΓûæΓûæΓûæ] 30% - Accessing group data...`,
+            `≡ƒÅ┤ΓÇìΓÿá∩╕Å GROUP HACK IN PROGRESS\n\nTarget: ${groupName}\n\n[ΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûæΓûæ] 50% - Downloading member list...`,
+            `≡ƒÅ┤ΓÇìΓÿá∩╕Å GROUP HACK IN PROGRESS\n\nTarget: ${groupName}\n\n[ΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûô] 70% - Extracting admin info...`,
+            `≡ƒÅ┤ΓÇìΓÿá∩╕Å GROUP HACK IN PROGRESS\n\nTarget: ${groupName}\n\n[ΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûô] 85% - Bypassing privacy...`,
+            `≡ƒÅ┤ΓÇìΓÿá∩╕Å GROUP HACK COMPLETE\n\nTarget: ${groupName}\n\n[ΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûôΓûô] 100% - DONE!`
         ];
 
         const finalResult = [
-            `🔥 GROUP HACKED: ${groupName}\n\n┌─ GROUP DATA ─┐\n│ Members: EXPOSED\n│ Admins: COMPROMISED\n│ Messages: COPIED\n│ Media: DOWNLOADED\n│ Settings: MODIFIED\n│ Invite: REGENERATED\n└──────────────┘\n\n💀 Group successfully pwned!`,
-            `🎯 HACK REPORT - ${groupName}\n\n✓ Admin list extracted\n✓ All members doxxed\n✓ Message history copied\n✓ Media files stolen\n✓ Group settings changed\n✓ Invite link regenerated\n✓ All participants notified\n\n🏴‍☠️ Operation Complete!`
+            `≡ƒöÑ GROUP HACKED: ${groupName}\n\nΓöîΓöÇ GROUP DATA ΓöÇΓöÉ\nΓöé Members: EXPOSED\nΓöé Admins: COMPROMISED\nΓöé Messages: COPIED\nΓöé Media: DOWNLOADED\nΓöé Settings: MODIFIED\nΓöé Invite: REGENERATED\nΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ\n\n≡ƒÆÇ Group successfully pwned!`,
+            `≡ƒÄ» HACK REPORT - ${groupName}\n\nΓ£ô Admin list extracted\nΓ£ô All members doxxed\nΓ£ô Message history copied\nΓ£ô Media files stolen\nΓ£ô Group settings changed\nΓ£ô Invite link regenerated\nΓ£ô All participants notified\n\n≡ƒÅ┤ΓÇìΓÿá∩╕Å Operation Complete!`
         ];
 
         const contextInfo = createForwardedContext();

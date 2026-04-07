@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const responses = [
     "Yes, definitely!",
@@ -29,7 +29,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: `🔮 *Ask the Oracle*\n\n*Usage:* !ask <question>\n\nAsk a yes/no question and get an answer!\n\n*Example:* !ask Will I have a great day?`,
+                text: `≡ƒö« *Ask the Oracle*\n\n*Usage:* !ask <question>\n\nAsk a yes/no question and get an answer!\n\n*Example:* !ask Will I have a great day?`,
                 contextInfo
             }, { quoted: msg });
             return;
@@ -40,10 +40,10 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `🔮 *Question:* "${question}"\n\n*Answer:* ${response}`,
+            text: `≡ƒö« *Question:* "${question}"\n\n*Answer:* ${response}`,
             contextInfo
         }, { quoted: msg });
         
-        await sock.sendMessage(from, { react: { text: '🔮', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒö«', key: msg.key } });
     }
 };

@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "calculate",
@@ -11,7 +11,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🧮 *CALCULATOR*\n\nUsage: !calculate <expression>\n\nExamples:\n!calculate 2 + 2\n!calculate 10 * 5\n!calculate 2^8\n!calculate sqrt(144)\n!calculate 25% of 200\n\nSupported:\n+ - * / ^ % sqrt`,
+                text: `≡ƒº« *CALCULATOR*\n\nUsage: !calculate <expression>\n\nExamples:\n!calculate 2 + 2\n!calculate 10 * 5\n!calculate 2^8\n!calculate sqrt(144)\n!calculate 25% of 200\n\nSupported:\n+ - * / ^ % sqrt`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -19,7 +19,7 @@ module.exports = {
         
         let expression = args.join(' ').toLowerCase();
         
-        await sock.sendMessage(from, { react: { text: '🧮', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒº«', key: msg.key } });
         
         try {
             // Handle percentage
@@ -29,7 +29,7 @@ module.exports = {
                     const result = (parseFloat(percentMatch[1]) / 100) * parseFloat(percentMatch[2]);
                     const contextInfo = createForwardedContext();
                     await sock.sendMessage(from, { 
-                        text: `🧮 *CALCULATION*\n\n${percentMatch[1]}% of ${percentMatch[2]} = *${result}*`,
+                        text: `≡ƒº« *CALCULATION*\n\n${percentMatch[1]}% of ${percentMatch[2]} = *${result}*`,
                         contextInfo 
                     }, { quoted: msg });
                     return;
@@ -55,14 +55,14 @@ module.exports = {
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🧮 *CALCULATION*\n\n${args.join(' ')} = *${formatted}*`,
+                text: `≡ƒº« *CALCULATION*\n\n${args.join(' ')} = *${formatted}*`,
                 contextInfo 
             }, { quoted: msg });
             
         } catch (err) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `❌ Invalid expression.\n\nUse: !calc <expression>\nExample: !calc 2 + 2`,
+                text: `Γ¥î Invalid expression.\n\nUse: !calc <expression>\nExample: !calc 2 + 2`,
                 contextInfo 
             }, { quoted: msg });
         }

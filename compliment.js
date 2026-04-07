@@ -1,38 +1,38 @@
-const axios = require("axios");
+﻿const axios = require("axios");
 const { createForwardedContext } = require('./_helpers');
 
 const compliments = [
-    "🌟 You're absolutely amazing!",
-    "💫 You light up every room you enter!",
-    "✨ You're stronger than you know!",
-    "🌈 Your smile is contagious!",
-    "💖 You're one of a kind!",
-    "🔥 You're doing incredible!",
-    "⭐ You make the world better!",
-    "💎 You're precious!",
-    "🎯 You're amazing at being you!",
-    "🌺 You're wonderfully unique!",
-    "💫 Your energy is pure magic!",
-    "🦋 You inspire others!",
-    "🌻 You're a ray of sunshine!",
-    "💝 You deserve all the happiness!",
-    "👑 You're royalty!",
-    "🌸 You're beautiful inside and out!",
-    "💪 You're unstoppable!",
-    "🎭 You're incredibly talented!",
-    "⭐ You're a star!",
-    "🌙 You're simply the best!"
+    "≡ƒîƒ You're absolutely amazing!",
+    "≡ƒÆ½ You light up every room you enter!",
+    "Γ£¿ You're stronger than you know!",
+    "≡ƒîê Your smile is contagious!",
+    "≡ƒÆû You're one of a kind!",
+    "≡ƒöÑ You're doing incredible!",
+    "Γ¡É You make the world better!",
+    "≡ƒÆÄ You're precious!",
+    "≡ƒÄ» You're amazing at being you!",
+    "≡ƒî║ You're wonderfully unique!",
+    "≡ƒÆ½ Your energy is pure magic!",
+    "≡ƒªï You inspire others!",
+    "≡ƒî╗ You're a ray of sunshine!",
+    "≡ƒÆ¥ You deserve all the happiness!",
+    "≡ƒææ You're royalty!",
+    "≡ƒî╕ You're beautiful inside and out!",
+    "≡ƒÆ¬ You're unstoppable!",
+    "≡ƒÄ¡ You're incredibly talented!",
+    "Γ¡É You're a star!",
+    "≡ƒîÖ You're simply the best!"
 ];
 
 const sweetMessages = [
-    "💕 Thinking of you right now!",
-    "🌸 You're amazing! Don't forget that!",
-    "✨ Sending you positive vibes!",
-    "💖 You make everything better!",
-    "🌺 You deserve all the love!",
-    "⭐ Keep shining, beautiful!",
-    "💫 You're stronger than you know!",
-    "🌈 Life is better with you in it!"
+    "≡ƒÆò Thinking of you right now!",
+    "≡ƒî╕ You're amazing! Don't forget that!",
+    "Γ£¿ Sending you positive vibes!",
+    "≡ƒÆû You make everything better!",
+    "≡ƒî║ You deserve all the love!",
+    "Γ¡É Keep shining, beautiful!",
+    "≡ƒÆ½ You're stronger than you know!",
+    "≡ƒîê Life is better with you in it!"
 ];
 
 module.exports = {
@@ -53,7 +53,7 @@ module.exports = {
             const sweet = sweetMessages[Math.floor(Math.random() * sweetMessages.length)];
             
             await sock.sendMessage(from, { 
-                text: `💖 *Compliment for ${target}:*\n\n${compliment}\n\n${sweet}\n\n_From: ${sender}_`,
+                text: `≡ƒÆû *Compliment for ${target}:*\n\n${compliment}\n\n${sweet}\n\n_From: ${sender}_`,
                 contextInfo 
             }, { quoted: msg });
         } else {
@@ -61,7 +61,7 @@ module.exports = {
             const compliment = compliments[Math.floor(Math.random() * compliments.length)];
             
             await sock.sendMessage(from, { 
-                text: `💖 *Hey ${sender}!*\n\n${compliment}\n\n✨ You're special just the way you are!`,
+                text: `≡ƒÆû *Hey ${sender}!*\n\n${compliment}\n\nΓ£¿ You're special just the way you are!`,
                 contextInfo 
             }, { quoted: msg });
         }

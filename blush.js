@@ -1,8 +1,8 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "blush",
-    aliases: ["😳", "shy", "embarrassed"],
+    aliases: ["≡ƒÿ│", "shy", "embarrassed"],
     description: "Send a blushing reaction",
 
     async execute(sock, msg, args = []) {
@@ -12,11 +12,11 @@ module.exports = {
         const contextInfo = createForwardedContext();
         
         const blushes = [
-            "😳 *goes bright red!*",
-            "🥺 *is blushing so hard!*",
-            "😆 *nervously smiles!*",
-            "💕 *feels shy!*",
-            "😅 *turns all shades of red!*"
+            "≡ƒÿ│ *goes bright red!*",
+            "≡ƒÑ║ *is blushing so hard!*",
+            "≡ƒÿå *nervously smiles!*",
+            "≡ƒÆò *feels shy!*",
+            "≡ƒÿà *turns all shades of red!*"
         ];
         
         const blush = blushes[Math.floor(Math.random() * blushes.length)];
@@ -24,12 +24,12 @@ module.exports = {
         if (args.length > 0) {
             const target = args.join(" ");
             await sock.sendMessage(from, { 
-                text: `😳 *${sender} blushes at ${target}!*\n\n${blush}\n\n💕 So cute!`,
+                text: `≡ƒÿ│ *${sender} blushes at ${target}!*\n\n${blush}\n\n≡ƒÆò So cute!`,
                 contextInfo 
             }, { quoted: msg });
         } else {
             await sock.sendMessage(from, { 
-                text: `😳 *${sender} is blushing!*\n\n${blush}\n\n💕 Aw!`,
+                text: `≡ƒÿ│ *${sender} is blushing!*\n\n${blush}\n\n≡ƒÆò Aw!`,
                 contextInfo 
             }, { quoted: msg });
         }

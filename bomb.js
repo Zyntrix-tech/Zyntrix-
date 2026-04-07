@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "bomb",
@@ -10,7 +10,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: "💣 Bomb Command\n\nUsage: !bomb <message> [count]\n\nExample: !bomb Hello 5",
+                text: "≡ƒÆú Bomb Command\n\nUsage: !bomb <message> [count]\n\nExample: !bomb Hello 5",
                 contextInfo
             }, { quoted: msg });
             return;
@@ -22,7 +22,7 @@ module.exports = {
         if (!isGroup) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: "⚠️ This command only works in groups!",
+                text: "ΓÜá∩╕Å This command only works in groups!",
                 contextInfo
             }, { quoted: msg });
             return;
@@ -39,7 +39,7 @@ module.exports = {
         }
         
         if (!message) {
-            message = "💣 BOOM!";
+            message = "≡ƒÆú BOOM!";
         }
 
         const contextInfo = createForwardedContext();

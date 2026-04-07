@@ -1,4 +1,4 @@
-const axios = require("axios");
+﻿const axios = require("axios");
 const { createForwardedContext } = require('./_helpers');
 
 // Built-in dark content for when API is not available
@@ -22,7 +22,7 @@ const creepyFacts = [
     "The concept of 'sleep paralysis' explains many 'demon' encounters - the brain wakes up but the body is still paralyzed, often with terrifying visual hallucinations.",
     "In Japan, there's a phenomenon called 'Kokoro' - where people become convinced their family members have been replaced by impostors.",
     "The most haunted room in the Tower of London is said to be the Wakefield Tower, where the ghosts of three queens are said to appear.",
-    "There's a condition called 'Folie à deux' where a delusion is shared between two people - sometimes entire families.",
+    "There's a condition called 'Folie ├á deux' where a delusion is shared between two people - sometimes entire families.",
     "The 'Amityville Horror' house had a unique architectural feature called a 'priest's hole' - used to hide priests during persecution.",
     "Clowns have a name: coulrophobia - the fear of clowns. It's one of the most common phobias in the world.",
     "There's a type of fungus called 'Cordyceps' that infects insects and controls their behavior before consuming them from within.",
@@ -54,19 +54,19 @@ module.exports = {
         if (!prompt) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🌙 Dark AI - Horror & Dark Content\n\n" +
-                      "━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+                text: "≡ƒîÖ Dark AI - Horror & Dark Content\n\n" +
+                      "ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n" +
                       "Usage: !darkai <request>\n\n" +
                       "Commands:\n" +
-                      "• !darkai story - Random horror story\n" +
-                      "• !darkai fact - Creepy fact\n" +
-                      "• !darkai poem - Dark poetry\n" +
-                      "• !darkai <question> - Ask anything dark\n\n" +
+                      "ΓÇó !darkai story - Random horror story\n" +
+                      "ΓÇó !darkai fact - Creepy fact\n" +
+                      "ΓÇó !darkai poem - Dark poetry\n" +
+                      "ΓÇó !darkai <question> - Ask anything dark\n\n" +
                       "Examples:\n" +
-                      "• !darkai tell me a horror story\n" +
-                      "• !darkai what's the scariest thing\n" +
-                      "• !darkai write something creepy\n\n" +
-                      "⚠️ Not for the faint of heart!",
+                      "ΓÇó !darkai tell me a horror story\n" +
+                      "ΓÇó !darkai what's the scariest thing\n" +
+                      "ΓÇó !darkai write something creepy\n\n" +
+                      "ΓÜá∩╕Å Not for the faint of heart!",
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -77,7 +77,7 @@ module.exports = {
             const story = darkStories[Math.floor(Math.random() * darkStories.length)];
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🌙 HORROR STORY:\n\n${story}`,
+                text: `≡ƒîÖ HORROR STORY:\n\n${story}`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -87,7 +87,7 @@ module.exports = {
             const fact = creepyFacts[Math.floor(Math.random() * creepyFacts.length)];
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🌙 CREEPY FACT:\n\n${fact}`,
+                text: `≡ƒîÖ CREEPY FACT:\n\n${fact}`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -97,7 +97,7 @@ module.exports = {
             const poem = darkPoetry[Math.floor(Math.random() * darkPoetry.length)];
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🌙 DARK POETRY:\n\n${poem}`,
+                text: `≡ƒîÖ DARK POETRY:\n\n${poem}`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -138,7 +138,7 @@ Created by Emmanuel Restoration Abimbola.`
                 const out = res.choices?.[0]?.message?.content?.trim() || "The darkness speaks... but nothing came out.";
                 const contextInfo = createForwardedContext();
                 await sock.sendMessage(from, { 
-                    text: `🌙 ${out}`,
+                    text: `≡ƒîÖ ${out}`,
                     contextInfo 
                 }, { quoted: msg });
                 return;
@@ -151,10 +151,10 @@ Created by Emmanuel Restoration Abimbola.`
         
         // Fallback to built-in dark content
         const responses = [
-            "🌙 The shadows whisper... let me tell you something dark...",
-            "🌙 In the darkness, I recall...",
-            "🌙 *The darkness deepens* Let me share...",
-            "🌙 From the void, I speak...",
+            "≡ƒîÖ The shadows whisper... let me tell you something dark...",
+            "≡ƒîÖ In the darkness, I recall...",
+            "≡ƒîÖ *The darkness deepens* Let me share...",
+            "≡ƒîÖ From the void, I speak...",
         ];
         
         const randomIntro = responses[Math.floor(Math.random() * responses.length)];

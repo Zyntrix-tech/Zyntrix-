@@ -1,4 +1,4 @@
-module.exports = {
+﻿module.exports = {
     name: "destroy",
 
     async execute(sock, msg, args = []) {
@@ -12,7 +12,7 @@ module.exports = {
         }
 
         await sock.sendMessage(from, {
-            text: `💥 @${target.split("@")[0]} has been destroyed (for fun)!`,
+            text: `≡ƒÆÑ @${target.split("@")[0]} has been destroyed (for fun)!`,
             mentions: [target]
         }, { quoted: msg });
     }

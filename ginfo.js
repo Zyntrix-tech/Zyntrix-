@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "ginfo",
@@ -11,7 +11,7 @@ module.exports = {
         // Check if it's a group
         if (!jid.endsWith("@g.us")) {
             await sock.sendMessage(jid, { 
-                text: "📋 This command only works in groups!" 
+                text: "≡ƒôï This command only works in groups!" 
             }, { quoted: msg });
             return;
         }
@@ -34,15 +34,15 @@ module.exports = {
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(jid, { 
-                text: `📋 *GROUP INFORMATION*\n\n` +
-                      `━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-                      `📛 *Name:* ${metadata.subject}\n\n` +
-                      `👥 *Members:* ${totalMembers}\n` +
-                      `👮 *Admins:* ${totalAdmins}\n` +
-                      `🤖 *Bot Status:* ${isBotAdmin ? '✅ Admin' : '❌ Member'}\n\n` +
-                      `📅 *Created:* ${created}\n` +
-                      `🆔 *Group ID:* ${jid.split('@')[0]}\n\n` +
-                      `━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                text: `≡ƒôï *GROUP INFORMATION*\n\n` +
+                      `ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n` +
+                      `≡ƒô¢ *Name:* ${metadata.subject}\n\n` +
+                      `≡ƒæÑ *Members:* ${totalMembers}\n` +
+                      `≡ƒæ« *Admins:* ${totalAdmins}\n` +
+                      `≡ƒñû *Bot Status:* ${isBotAdmin ? 'Γ£à Admin' : 'Γ¥î Member'}\n\n` +
+                      `≡ƒôà *Created:* ${created}\n` +
+                      `≡ƒåö *Group ID:* ${jid.split('@')[0]}\n\n` +
+                      `ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n` +
                       `Use !tagadmin to mention all admins!`,
                 contextInfo 
             }, { quoted: msg });
@@ -50,7 +50,7 @@ module.exports = {
         } catch (err) {
             console.error("Ginfo command error:", err);
             await sock.sendMessage(jid, { 
-                text: "❌ Failed to get group information!" 
+                text: "Γ¥î Failed to get group information!" 
             }, { quoted: msg });
         }
     }

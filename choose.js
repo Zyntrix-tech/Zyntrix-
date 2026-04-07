@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "pick",
@@ -11,20 +11,20 @@ module.exports = {
         if (!args.length || !args.includes('|')) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🎯 *RANDOM PICKER*\n\nUsage: !pick <option1> | <option2> | <option3>\n\nExample:\n!pick Pizza | Burger | Sushi\n!pick Red | Blue | Green | Yellow`,
+                text: `≡ƒÄ» *RANDOM PICKER*\n\nUsage: !pick <option1> | <option2> | <option3>\n\nExample:\n!pick Pizza | Burger | Sushi\n!pick Red | Blue | Green | Yellow`,
                 contextInfo 
             }, { quoted: msg });
             return;
         }
         
-        await sock.sendMessage(from, { react: { text: '🎯', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÄ»', key: msg.key } });
         
         const options = args.join(' ').split('|').map(o => o.trim()).filter(o => o);
         
         if (options.length < 2) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `❌ Please provide at least 2 options separated by |`,
+                text: `Γ¥î Please provide at least 2 options separated by |`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -34,7 +34,7 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: `🎯 *CHOICE MADE*\n\nFrom: ${options.join(', ')}\n\nI choose: *${choice}*`,
+            text: `≡ƒÄ» *CHOICE MADE*\n\nFrom: ${options.join(', ')}\n\nI choose: *${choice}*`,
             contextInfo 
         }, { quoted: msg });
     }

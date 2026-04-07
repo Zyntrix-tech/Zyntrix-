@@ -1,16 +1,16 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const hugs = [
-    "🤗 *Sends a warm, cozy hug!*",
-    "🫂 *Gives a tight, comforting embrace!*",
-    "💝 *Wraps arms around you gently!*",
-    "🧸 *Bear hug from a distance!*",
-    "✨ *Magical healing hug!*",
-    "🌸 *Soft and gentle hug!*",
-    "🔥 *Warm and cozy hug!*",
-    "💕 *Friendly hug!*",
-    "🙆 *Big bear hug!*",
-    "🫶 *Heartwarming embrace!*"
+    "≡ƒñù *Sends a warm, cozy hug!*",
+    "≡ƒ½é *Gives a tight, comforting embrace!*",
+    "≡ƒÆ¥ *Wraps arms around you gently!*",
+    "≡ƒº╕ *Bear hug from a distance!*",
+    "Γ£¿ *Magical healing hug!*",
+    "≡ƒî╕ *Soft and gentle hug!*",
+    "≡ƒöÑ *Warm and cozy hug!*",
+    "≡ƒÆò *Friendly hug!*",
+    "≡ƒÖå *Big bear hug!*",
+    "≡ƒ½╢ *Heartwarming embrace!*"
 ];
 
 module.exports = {
@@ -29,12 +29,12 @@ module.exports = {
         if (args.length > 0) {
             const target = args.join(" ");
             await sock.sendMessage(from, { 
-                text: `🤗 *${sender} hugs ${target}!*\n\n${hug}\n\n💕 Spread the love!`,
+                text: `≡ƒñù *${sender} hugs ${target}!*\n\n${hug}\n\n≡ƒÆò Spread the love!`,
                 contextInfo 
             }, { quoted: msg });
         } else {
             await sock.sendMessage(from, { 
-                text: `🤗 *${sender} wants a hug!*\n\n${hug}\n\n💕 Everyone needs a hug sometimes!`,
+                text: `≡ƒñù *${sender} wants a hug!*\n\n${hug}\n\n≡ƒÆò Everyone needs a hug sometimes!`,
                 contextInfo 
             }, { quoted: msg });
         }

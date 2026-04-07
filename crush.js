@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "crush",
@@ -12,7 +12,7 @@ module.exports = {
         
         if (args.length < 1) {
             await sock.sendMessage(from, { 
-                text: `💕 *CRUSH CALCULATOR*\n\n━━━━━━━━━━━━━━━━\n\nUsage: !crush <name>\n\nExample: !crush Sarah\n\nFind out your crush compatibility! 💖`,
+                text: `≡ƒÆò *CRUSH CALCULATOR*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nUsage: !crush <name>\n\nExample: !crush Sarah\n\nFind out your crush compatibility! ≡ƒÆû`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -28,24 +28,24 @@ module.exports = {
         let emoji;
         
         if (percentage >= 90) {
-            result = "💍 MATCH MADE IN HEAVEN!";
-            emoji = "👼";
+            result = "≡ƒÆì MATCH MADE IN HEAVEN!";
+            emoji = "≡ƒæ╝";
         } else if (percentage >= 75) {
-            result = "🔥 HOT! Strong connection!";
-            emoji = "🔥";
+            result = "≡ƒöÑ HOT! Strong connection!";
+            emoji = "≡ƒöÑ";
         } else if (percentage >= 50) {
-            result = "💕 Good chances! Go for it!";
-            emoji = "💕";
+            result = "≡ƒÆò Good chances! Go for it!";
+            emoji = "≡ƒÆò";
         } else if (percentage >= 25) {
-            result = "🤔 Might need more time...";
-            emoji = "🤔";
+            result = "≡ƒñö Might need more time...";
+            emoji = "≡ƒñö";
         } else {
-            result = "💀 Friendzone alert!";
-            emoji = "💀";
+            result = "≡ƒÆÇ Friendzone alert!";
+            emoji = "≡ƒÆÇ";
         }
         
         await sock.sendMessage(from, { 
-            text: `💕 *CRUSH CALCULATOR*\n\n━━━━━━━━━━━━━━━━\n\n👤 Your Crush: *${crushName}*\n\n💖 Compatibility: *${percentage}%*\n\n${emoji} ${result}\n\n━━━━━━━━━━━━━━━━\n\n⚠️ Just for fun! Don't take it seriously!`,
+            text: `≡ƒÆò *CRUSH CALCULATOR*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒæñ Your Crush: *${crushName}*\n\n≡ƒÆû Compatibility: *${percentage}%*\n\n${emoji} ${result}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓÜá∩╕Å Just for fun! Don't take it seriously!`,
             contextInfo 
         }, { quoted: msg });
     }

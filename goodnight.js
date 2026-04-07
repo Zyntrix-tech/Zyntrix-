@@ -1,16 +1,16 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const wishes = [
-    "🌙 *Good night! Sweet dreams await you!*",
-    "✨ *Sleep tight! Tomorrow is another adventure!*",
-    "🌟 *Rest well! You've earned it!*",
-    "💫 *Dream big and sleep peacefully!*",
-    "🌛 *Night vibes! Let the stars watch over you!*",
-    "😴 *Time to recharge! See you tomorrow!*",
-    "🌃 *Rest your head, clear your mind!*",
-    "🛏️ *Sweet dreams are made of this!*",
-    "🌙 *Sleep like there's no tomorrow!*",
-    "✨ *Close your eyes and drift away!*"
+    "≡ƒîÖ *Good night! Sweet dreams await you!*",
+    "Γ£¿ *Sleep tight! Tomorrow is another adventure!*",
+    "≡ƒîƒ *Rest well! You've earned it!*",
+    "≡ƒÆ½ *Dream big and sleep peacefully!*",
+    "≡ƒî¢ *Night vibes! Let the stars watch over you!*",
+    "≡ƒÿ┤ *Time to recharge! See you tomorrow!*",
+    "≡ƒîâ *Rest your head, clear your mind!*",
+    "≡ƒ¢Å∩╕Å *Sweet dreams are made of this!*",
+    "≡ƒîÖ *Sleep like there's no tomorrow!*",
+    "Γ£¿ *Close your eyes and drift away!*"
 ];
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
         const wish = wishes[Math.floor(Math.random() * wishes.length)];
         
         await sock.sendMessage(from, { 
-            text: `🌙 *GOOD NIGHT!*\n\n━━━━━━━━━━━━━━━━\n\n${wish}\n\n━━━━━━━━━━━━━━━━\n\n✨ Rest well! Use !goodmorning to start the day!`,
+            text: `≡ƒîÖ *GOOD NIGHT!*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n${wish}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£¿ Rest well! Use !goodmorning to start the day!`,
             contextInfo 
         }, { quoted: msg });
     }

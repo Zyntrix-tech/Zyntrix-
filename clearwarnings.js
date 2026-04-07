@@ -1,4 +1,4 @@
-module.exports = {
+﻿module.exports = {
     name: "clearwarnings",
 
     async execute(sock, msg, args = []) {

@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "dadjoke",
@@ -8,7 +8,7 @@ module.exports = {
     async execute(sock, msg, args) {
         const from = msg.key.remoteJid;
         
-        await sock.sendMessage(from, { react: { text: '👨', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒæ¿', key: msg.key } });
         
         const jokes = [
             "I'm afraid for the calendar. Its days are numbered.",
@@ -27,7 +27,7 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: "👨 *DAD JOKE*\n\n" + joke,
+            text: "≡ƒæ¿ *DAD JOKE*\n\n" + joke,
             contextInfo 
         }, { quoted: msg });
     }

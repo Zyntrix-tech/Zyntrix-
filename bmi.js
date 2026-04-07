@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "bmi",
@@ -11,13 +11,13 @@ module.exports = {
         if (!args.length || args.length < 2) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `⚖️ *BMI CALCULATOR*\n\nUsage: !bmi <weight> <height>\n\nUnits:\n!bmi 70 kg 175 cm\n!bmi 150 lbs 5.8 ft`,
+                text: `ΓÜû∩╕Å *BMI CALCULATOR*\n\nUsage: !bmi <weight> <height>\n\nUnits:\n!bmi 70 kg 175 cm\n!bmi 150 lbs 5.8 ft`,
                 contextInfo 
             }, { quoted: msg });
             return;
         }
         
-        await sock.sendMessage(from, { react: { text: '⚖️', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: 'ΓÜû∩╕Å', key: msg.key } });
         
         const weight = parseFloat(args[0]);
         const unit = args[1].toLowerCase();
@@ -48,7 +48,7 @@ module.exports = {
         if (isNaN(weightKg) || isNaN(heightCm) || heightCm <= 0) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `❌ Invalid values. Please check your input.`,
+                text: `Γ¥î Invalid values. Please check your input.`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -62,22 +62,22 @@ module.exports = {
         let emoji;
         if (bmi < 18.5) {
             category = "Underweight";
-            emoji = "📉";
+            emoji = "≡ƒôë";
         } else if (bmi < 25) {
             category = "Normal weight";
-            emoji = "✅";
+            emoji = "Γ£à";
         } else if (bmi < 30) {
             category = "Overweight";
-            emoji = "⚠️";
+            emoji = "ΓÜá∩╕Å";
         } else {
             category = "Obese";
-            emoji = "❗";
+            emoji = "Γ¥ù";
         }
         
         const idealWeightMin = (18.5 * heightM * heightM).toFixed(1);
         const idealWeightMax = (24.9 * heightM * heightM).toFixed(1);
         
-        const text = `⚖️ *BMI RESULT*\n\n` +
+        const text = `ΓÜû∩╕Å *BMI RESULT*\n\n` +
                      `Weight: ${weightKg.toFixed(1)} kg\n` +
                      `Height: ${heightCm.toFixed(1)} cm\n\n` +
                      `Your BMI: *${bmiRounded}*\n` +

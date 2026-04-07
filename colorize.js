@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const colors = [
     { name: "Passion Red", hex: "#FF0000", meaning: "Love, energy, passion" },
@@ -40,10 +40,10 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `🎨 *Color Spotlight*\n\n*Name:* ${color.name}\n*Hex:* ${color.hex}\n*Meaning:* ${color.meaning}`,
+            text: `≡ƒÄ¿ *Color Spotlight*\n\n*Name:* ${color.name}\n*Hex:* ${color.hex}\n*Meaning:* ${color.meaning}`,
             contextInfo
         }, { quoted: msg });
         
-        await sock.sendMessage(from, { react: { text: '🎨', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÄ¿', key: msg.key } });
     }
 };

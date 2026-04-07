@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: 'frecording',
@@ -14,7 +14,7 @@ module.exports = {
         
         if (!isOwner) {
             await sock.sendMessage(from, { 
-                text: "🎤 Only the bot owner can configure fake recording!" 
+                text: "≡ƒÄñ Only the bot owner can configure fake recording!" 
             }, { quoted: msg });
             return;
         }
@@ -30,7 +30,7 @@ module.exports = {
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎤 *FAKE RECORDING ENABLED*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n✅ Fake recording indicator is now ACTIVE!\n\n📝 When someone sends you a message, it will appear as if you are recording a voice note.\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n💡 Use !frecording off to disable.",
+                text: "≡ƒÄñ *FAKE RECORDING ENABLED*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£à Fake recording indicator is now ACTIVE!\n\n≡ƒô¥ When someone sends you a message, it will appear as if you are recording a voice note.\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Use !frecording off to disable.",
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -41,7 +41,7 @@ module.exports = {
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎤 *FAKE RECORDING DISABLED*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n✅ Fake recording indicator is now INACTIVE!\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n💡 Use !frecording on to enable.",
+                text: "≡ƒÄñ *FAKE RECORDING DISABLED*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£à Fake recording indicator is now INACTIVE!\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Use !frecording on to enable.",
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -49,11 +49,11 @@ module.exports = {
         
         // Show current status
         const isEnabled = global.fakeRecordingSettings.enabled;
-        const status = isEnabled ? '✅ ACTIVE' : '❌ INACTIVE';
+        const status = isEnabled ? 'Γ£à ACTIVE' : 'Γ¥î INACTIVE';
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: `🎤 *FAKE RECORDING STATUS*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Current Status: ${status}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n💡 Usage:\n!frecording on - Enable fake recording\n!frecording off - Disable fake recording`,
+            text: `≡ƒÄñ *FAKE RECORDING STATUS*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒôè Current Status: ${status}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Usage:\n!frecording on - Enable fake recording\n!frecording off - Disable fake recording`,
             contextInfo 
         }, { quoted: msg });
     }

@@ -1,8 +1,8 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "clap",
-    aliases: ["👏", "applause", "bravo"],
+    aliases: ["≡ƒæÅ", "applause", "bravo"],
     description: "Add clap emojis to text",
 
     async execute(sock, msg, args = []) {
@@ -12,17 +12,17 @@ module.exports = {
         
         if (args.length === 0) {
             await sock.sendMessage(from, { 
-                text: "👏 *CLAP EMOJIS*\n\n━━━━━━━━━━━━━━━━\n\nUsage: !clap <text>\n\nExample: !clap Well done\n\nAdds 👏 between words!",
+                text: "≡ƒæÅ *CLAP EMOJIS*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nUsage: !clap <text>\n\nExample: !clap Well done\n\nAdds ≡ƒæÅ between words!",
                 contextInfo 
             }, { quoted: msg });
             return;
         }
         
         const text = args.join(" ");
-        const clappedText = text.split(" ").join(" 👏 ");
+        const clappedText = text.split(" ").join(" ≡ƒæÅ ");
         
         await sock.sendMessage(from, { 
-            text: `👏 *CLAP!*\n\n━━━━━━━━━━━━━━━━\n\n${clappedText} 👏\n\n━━━━━━━━━━━━━━━━`,
+            text: `≡ƒæÅ *CLAP!*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n${clappedText} ≡ƒæÅ\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü`,
             contextInfo 
         }, { quoted: msg });
     }

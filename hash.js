@@ -1,4 +1,4 @@
-const { createContextWithButtons } = require('./_helpers');
+﻿const { createContextWithButtons } = require('./_helpers');
 const crypto = require('crypto');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         if (args.length < 2) {
             const contextInfo = createContextWithButtons();
             await sock.sendMessage(from, { 
-                text: `🔒 *HASH GENERATOR*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nUsage: !hash <type> <text>\n\nTypes:\n• md5 - MD5 hash\n• sha1 - SHA-1 hash\n• sha256 - SHA-256 hash\n• sha512 - SHA-512 hash\n\nExample:\n!hash md5 secretpassword\n!hash sha256 mymessage`,
+                text: `≡ƒöÆ *HASH GENERATOR*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nUsage: !hash <type> <text>\n\nTypes:\nΓÇó md5 - MD5 hash\nΓÇó sha1 - SHA-1 hash\nΓÇó sha256 - SHA-256 hash\nΓÇó sha512 - SHA-512 hash\n\nExample:\n!hash md5 secretpassword\n!hash sha256 mymessage`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -38,14 +38,14 @@ module.exports = {
                 break;
             default:
                 await sock.sendMessage(from, { 
-                    text: "❌ Invalid hash type! Use: md5, sha1, sha256, or sha512" 
+                    text: "Γ¥î Invalid hash type! Use: md5, sha1, sha256, or sha512" 
                 }, { quoted: msg });
                 return;
         }
 
         const contextInfo = createContextWithButtons();
         await sock.sendMessage(from, { 
-            text: `🔒 *HASH GENERATED (${type.toUpperCase()})*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📝 *Input:* ${text}\n\n🔐 *Hash:*\n\`\`\`\n${hash}\n\`\`\`\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📏 *Length:* ${hash.length} characters`,
+            text: `≡ƒöÆ *HASH GENERATED (${type.toUpperCase()})*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒô¥ *Input:* ${text}\n\n≡ƒöÉ *Hash:*\n\`\`\`\n${hash}\n\`\`\`\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒôÅ *Length:* ${hash.length} characters`,
             contextInfo 
         }, { quoted: msg });
     }

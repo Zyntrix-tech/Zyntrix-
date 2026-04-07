@@ -1,4 +1,4 @@
-const OpenAI = require('openai');
+﻿const OpenAI = require('openai');
 const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
@@ -13,22 +13,22 @@ module.exports = {
         if (!args.length || args[0] === 'help' || args[0] === '-h') {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🎨 *AI Image Generator*\n\n` +
-                      `━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                text: `≡ƒÄ¿ *AI Image Generator*\n\n` +
+                      `ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n` +
                       `*Usage:* !img <prompt>\n\n` +
                       `*Examples:*\n` +
-                      `• !img a cute cat on a couch\n` +
-                      `• !img a futuristic city at night\n` +
-                      `• !img a beautiful sunset over ocean\n\n` +
+                      `ΓÇó !img a cute cat on a couch\n` +
+                      `ΓÇó !img a futuristic city at night\n` +
+                      `ΓÇó !img a beautiful sunset over ocean\n\n` +
                       `*Style Options:*\n` +
-                      `• !img --realistic <prompt>\n` +
-                      `• !img --anime <prompt>\n` +
-                      `• !img --3d <prompt>\n` +
-                      `• !img --digital <prompt>\n` +
-                      `• !img --pencil <prompt>\n\n` +
+                      `ΓÇó !img --realistic <prompt>\n` +
+                      `ΓÇó !img --anime <prompt>\n` +
+                      `ΓÇó !img --3d <prompt>\n` +
+                      `ΓÇó !img --digital <prompt>\n` +
+                      `ΓÇó !img --pencil <prompt>\n\n` +
                       `*Generate 4 images:*\n` +
-                      `• !img <prompt> --4\n\n` +
-                      `✨ Powered by DALL-E 3`,
+                      `ΓÇó !img <prompt> --4\n\n` +
+                      `Γ£¿ Powered by DALL-E 3`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -66,7 +66,7 @@ module.exports = {
         if (!prompt) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎨 Please provide a prompt!\n\nExample: !img a cute cat", 
+                text: "≡ƒÄ¿ Please provide a prompt!\n\nExample: !img a cute cat", 
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -77,7 +77,7 @@ module.exports = {
             await sock.sendPresenceUpdate('composing', from);
             
             // Send reaction to show processing
-            await sock.sendMessage(from, { react: { text: '🎨', key: msg.key } });
+            await sock.sendMessage(from, { react: { text: '≡ƒÄ¿', key: msg.key } });
 
             const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -103,21 +103,21 @@ module.exports = {
                 
                 await sock.sendMessage(from, { 
                     image: { url: imageUrl }, 
-                    caption: `🎨 Generated: ${prompt}\n\n✨ Nexora AI (DALL-E 3)`, 
+                    caption: `≡ƒÄ¿ Generated: ${prompt}\n\nΓ£¿ Nexora AI (DALL-E 3)`, 
                     contextInfo 
                 }, { quoted: msg });
             }
             
             // Success reaction
-            await sock.sendMessage(from, { react: { text: '✅', key: msg.key } });
+            await sock.sendMessage(from, { react: { text: 'Γ£à', key: msg.key } });
             
         } catch (err) {
             console.error('Error generating image:', err);
             // Error reaction
-            await sock.sendMessage(from, { react: { text: '❌', key: msg.key } });
+            await sock.sendMessage(from, { react: { text: 'Γ¥î', key: msg.key } });
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "❌ Failed to generate image.\n\nPossible causes:\n• Invalid or inappropriate prompt\n• API limit reached\n• Network error\n\nPlease try again with a different prompt.", 
+                text: "Γ¥î Failed to generate image.\n\nPossible causes:\nΓÇó Invalid or inappropriate prompt\nΓÇó API limit reached\nΓÇó Network error\n\nPlease try again with a different prompt.", 
                 contextInfo 
             }, { quoted: msg });
         }

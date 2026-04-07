@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "grouplist",
@@ -14,7 +14,7 @@ module.exports = {
         
         if (!isOwner) {
             await sock.sendMessage(from, { 
-                text: "📋 This command is only for the bot owner!" 
+                text: "≡ƒôï This command is only for the bot owner!" 
             }, { quoted: msg });
             return;
         }
@@ -44,7 +44,7 @@ module.exports = {
             
             if (activeGroups.length === 0) {
                 await sock.sendMessage(from, { 
-                    text: "📋 *GROUP LIST*\n\nNo groups found where the bot is active.",
+                    text: "≡ƒôï *GROUP LIST*\n\nNo groups found where the bot is active.",
                     contextInfo 
                 }, { quoted: msg });
                 return;
@@ -56,14 +56,14 @@ module.exports = {
             ).join('\n\n');
 
             await sock.sendMessage(from, { 
-                text: `📋 *BOT GROUPS (${activeGroups.length})*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n${groupList}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nTotal: ${activeGroups.length} groups`,
+                text: `≡ƒôï *BOT GROUPS (${activeGroups.length})*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n${groupList}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nTotal: ${activeGroups.length} groups`,
                 contextInfo 
             }, { quoted: msg });
 
         } catch (err) {
             console.error("Grouplist command error:", err);
             await sock.sendMessage(from, { 
-                text: "❌ Failed to get group list!" 
+                text: "Γ¥î Failed to get group list!" 
             }, { quoted: msg });
         }
     }

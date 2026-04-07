@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "hack",
@@ -11,13 +11,13 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎮 *GAME HACKS*\n\nUsage: !hack <game>\n\nAvailable games:\ngta\ncod\nfortnite\nminecraft\nroblox\ngenshin\npubg\nfreefire",
+                text: "≡ƒÄ« *GAME HACKS*\n\nUsage: !hack <game>\n\nAvailable games:\ngta\ncod\nfortnite\nminecraft\nroblox\ngenshin\npubg\nfreefire",
                 contextInfo 
             }, { quoted: msg });
             return;
         }
         
-        await sock.sendMessage(from, { react: { text: '🎮', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÄ«', key: msg.key } });
         
         const game = args[0].toLowerCase();
         
@@ -37,7 +37,7 @@ module.exports = {
         if (gameHacks) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎮 *HACK CODES FOR " + game.toUpperCase() + "*\n\n" + gameHacks.join('\n'),
+                text: "≡ƒÄ« *HACK CODES FOR " + game.toUpperCase() + "*\n\n" + gameHacks.join('\n'),
                 contextInfo 
             }, { quoted: msg });
         } else {

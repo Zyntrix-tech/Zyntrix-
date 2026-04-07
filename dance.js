@@ -1,8 +1,8 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "dance",
-    aliases: ["💃", "party", "groove"],
+    aliases: ["≡ƒÆâ", "party", "groove"],
     description: "Send a dancing reaction",
 
     async execute(sock, msg, args = []) {
@@ -12,11 +12,11 @@ module.exports = {
         const contextInfo = createForwardedContext();
         
         const dances = [
-            "💃 *starts dancing!*",
-            "🕺 *is grooving!*",
-            "💫 *drops the beat!*",
-            "🎶 *gets down!*",
-            "🎵 *is vibing hard!*"
+            "≡ƒÆâ *starts dancing!*",
+            "≡ƒò║ *is grooving!*",
+            "≡ƒÆ½ *drops the beat!*",
+            "≡ƒÄ╢ *gets down!*",
+            "≡ƒÄ╡ *is vibing hard!*"
         ];
         
         const dance = dances[Math.floor(Math.random() * dances.length)];
@@ -24,12 +24,12 @@ module.exports = {
         if (args.length > 0) {
             const target = args.join(" ");
             await sock.sendMessage(from, { 
-                text: `💃 *${sender} dances with ${target}!*\n\n${dance}\n\n🎉 Party time!`,
+                text: `≡ƒÆâ *${sender} dances with ${target}!*\n\n${dance}\n\n≡ƒÄë Party time!`,
                 contextInfo 
             }, { quoted: msg });
         } else {
             await sock.sendMessage(from, { 
-                text: `💃 *${sender} is dancing!*\n\n${dance}\n\n🎶 Let's groove!`,
+                text: `≡ƒÆâ *${sender} is dancing!*\n\n${dance}\n\n≡ƒÄ╢ Let's groove!`,
                 contextInfo 
             }, { quoted: msg });
         }

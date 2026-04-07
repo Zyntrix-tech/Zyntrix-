@@ -1,4 +1,4 @@
-const axios = require("axios");
+﻿const axios = require("axios");
 const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🐙 *GITHUB INFO*\n\nUsage: !github <username>/<repo>\n\nExample:\n!github facebook/react\n!github nodejs/node`,
+                text: `≡ƒÉÖ *GITHUB INFO*\n\nUsage: !github <username>/<repo>\n\nExample:\n!github facebook/react\n!github nodejs/node`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -20,20 +20,20 @@ module.exports = {
         
         const repo = args.join('/');
         
-        await sock.sendMessage(from, { react: { text: '🐙', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÉÖ', key: msg.key } });
         
         try {
             const response = await axios.get(`https://api.github.com/repos/${repo}`);
             
             const r = response.data;
             
-            const text = `🐙 *${r.full_name}*\n\n` +
-                         `📝 ${r.description || 'No description'}\n\n` +
-                         `⭐ Stars: *${r.stargazers_count.toLocaleString()}*\n` +
-                         `🍴 Forks: *${r.forks_count.toLocaleString()}*\n` +
-                         `👁️ Watchers: *${r.watchers_count.toLocaleString()}*\n` +
-                         `📄 Language: ${r.language || 'N/A'}\n\n` +
-                         `🔗 ${r.html_url}`;
+            const text = `≡ƒÉÖ *${r.full_name}*\n\n` +
+                         `≡ƒô¥ ${r.description || 'No description'}\n\n` +
+                         `Γ¡É Stars: *${r.stargazers_count.toLocaleString()}*\n` +
+                         `≡ƒì┤ Forks: *${r.forks_count.toLocaleString()}*\n` +
+                         `≡ƒæü∩╕Å Watchers: *${r.watchers_count.toLocaleString()}*\n` +
+                         `≡ƒôä Language: ${r.language || 'N/A'}\n\n` +
+                         `≡ƒöù ${r.html_url}`;
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { text: text, contextInfo }, { quoted: msg });
@@ -41,7 +41,7 @@ module.exports = {
         } catch (err) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `❌ Repository not found.\n\nUse: !github username/repo`,
+                text: `Γ¥î Repository not found.\n\nUse: !github username/repo`,
                 contextInfo 
             }, { quoted: msg });
         }

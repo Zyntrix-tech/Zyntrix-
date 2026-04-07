@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "hack3",
@@ -12,7 +12,7 @@ module.exports = {
         if (!isGroup) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: "⚠️ This command only works in groups!",
+                text: "ΓÜá∩╕Å This command only works in groups!",
                 contextInfo
             }, { quoted: msg });
             return;
@@ -21,16 +21,16 @@ module.exports = {
         const target = args[0] ? args.join(" ") : "this chat";
         
         const hackSteps = [
-            "🔐 Establishing secure connection...",
-            "🔐 Bypassing WhatsApp encryption...",
-            "🔐 Accessing Meta servers...",
-            "🔐 Injecting SQL payload...",
-            "🔐 Brute-forcing password...",
-            "🔐 Installing keylogger...",
-            "🔐 Downloading contacts...",
-            "🔐 Accessing camera...",
-            "🔐 Reading messages...",
-            "🔐 Finalizing access..."
+            "≡ƒöÉ Establishing secure connection...",
+            "≡ƒöÉ Bypassing WhatsApp encryption...",
+            "≡ƒöÉ Accessing Meta servers...",
+            "≡ƒöÉ Injecting SQL payload...",
+            "≡ƒöÉ Brute-forcing password...",
+            "≡ƒöÉ Installing keylogger...",
+            "≡ƒöÉ Downloading contacts...",
+            "≡ƒöÉ Accessing camera...",
+            "≡ƒöÉ Reading messages...",
+            "≡ƒöÉ Finalizing access..."
         ];
 
         const contextInfo = createForwardedContext();
@@ -38,7 +38,7 @@ module.exports = {
         // Send hacking steps with progress
         for (let i = 0; i < hackSteps.length; i++) {
             const progress = Math.round(((i + 1) / hackSteps.length) * 100);
-            const bar = "█".repeat(Math.floor(progress / 5)) + "░".repeat(20 - Math.floor(progress / 5));
+            const bar = "Γûê".repeat(Math.floor(progress / 5)) + "Γûæ".repeat(20 - Math.floor(progress / 5));
             
             await sock.sendMessage(from, {
                 text: `${hackSteps[i]}\n\n[${bar}] ${progress}%`,
@@ -50,9 +50,9 @@ module.exports = {
         
         // Final hack message
         const finalMessages = [
-            `🎯 TARGET ACQUIRED: ${target}\n\n💀 SYSTEM STATUS: COMPROMISED\n✅ Access: ROOT\n🔓 Encryption: BYPASSED\n📊 Data: DOWNLOADED\n🗑️ Evidence: WIPED`,
-            `🔥 MISSION ACCOMPLISHED!\n\nTarget has been successfully hacked.\nAll data has been extracted.\nBackdoor installed.\nLeaving no trace...`,
-            `🏆 HACK COMPLETE!\n\n📱 Full device access granted\n💰 Bank accounts compromised\n📸 Private data exposed\n✅ Target is now fully owned`
+            `≡ƒÄ» TARGET ACQUIRED: ${target}\n\n≡ƒÆÇ SYSTEM STATUS: COMPROMISED\nΓ£à Access: ROOT\n≡ƒöô Encryption: BYPASSED\n≡ƒôè Data: DOWNLOADED\n≡ƒùæ∩╕Å Evidence: WIPED`,
+            `≡ƒöÑ MISSION ACCOMPLISHED!\n\nTarget has been successfully hacked.\nAll data has been extracted.\nBackdoor installed.\nLeaving no trace...`,
+            `≡ƒÅå HACK COMPLETE!\n\n≡ƒô▒ Full device access granted\n≡ƒÆ░ Bank accounts compromised\n≡ƒô╕ Private data exposed\nΓ£à Target is now fully owned`
         ];
         
         for (const finalMsg of finalMessages) {

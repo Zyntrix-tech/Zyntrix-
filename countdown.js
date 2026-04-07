@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "countdown",
@@ -13,7 +13,7 @@ module.exports = {
         if (!seconds || isNaN(seconds)) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: `⏱️ *Countdown Timer*\n\n*Usage:* !countdown <seconds>\n\n*Examples:*\n• !countdown 10\n• !countdown 60\n• !countdown 5`,
+                text: `ΓÅ▒∩╕Å *Countdown Timer*\n\n*Usage:* !countdown <seconds>\n\n*Examples:*\nΓÇó !countdown 10\nΓÇó !countdown 60\nΓÇó !countdown 5`,
                 contextInfo
             }, { quoted: msg });
             return;
@@ -22,7 +22,7 @@ module.exports = {
         if (seconds > 300) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: "⏱️ Maximum countdown is 300 seconds (5 minutes)",
+                text: "ΓÅ▒∩╕Å Maximum countdown is 300 seconds (5 minutes)",
                 contextInfo
             }, { quoted: msg });
             return;
@@ -30,7 +30,7 @@ module.exports = {
 
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `⏱️ *Countdown Started!* ${seconds} seconds...`,
+            text: `ΓÅ▒∩╕Å *Countdown Started!* ${seconds} seconds...`,
             contextInfo
         }, { quoted: msg });
 
@@ -38,16 +38,16 @@ module.exports = {
             seconds--;
             if (seconds > 0) {
                 await sock.sendMessage(from, {
-                    text: `⏱️ ${seconds}...`,
+                    text: `ΓÅ▒∩╕Å ${seconds}...`,
                     contextInfo
                 });
             } else {
                 clearInterval(interval);
                 await sock.sendMessage(from, {
-                    text: `🔔 *TIME'S UP!* ⏰`,
+                    text: `≡ƒöö *TIME'S UP!* ΓÅ░`,
                     contextInfo
                 });
-                await sock.sendMessage(from, { react: { text: '🔔', key: msg.key } });
+                await sock.sendMessage(from, { react: { text: '≡ƒöö', key: msg.key } });
             }
         }, 1000);
     }

@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "magicball",
@@ -11,13 +11,13 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎱 *MAGIC 8 BALL*\n\nUsage: !8ball <question>\n\nExample:\n!8ball Will I win the lottery?",
+                text: "≡ƒÄ▒ *MAGIC 8 BALL*\n\nUsage: !8ball <question>\n\nExample:\n!8ball Will I win the lottery?",
                 contextInfo 
             }, { quoted: msg });
             return;
         }
         
-        await sock.sendMessage(from, { react: { text: '🎱', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÄ▒', key: msg.key } });
         
         const answers = [
             "Yes, definitely!",
@@ -46,7 +46,7 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: "🎱 *MAGIC 8 BALL*\n\nQuestion: " + args.join(' ') + "\n\nAnswer: *" + answer + "*",
+            text: "≡ƒÄ▒ *MAGIC 8 BALL*\n\nQuestion: " + args.join(' ') + "\n\nAnswer: *" + answer + "*",
             contextInfo 
         }, { quoted: msg });
     }

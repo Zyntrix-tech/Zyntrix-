@@ -1,6 +1,4 @@
 ﻿const TelegramBot = require("node-telegram-bot-api");
-const telegram = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
-
 const path = require('path');
 const fs = require('fs');
 const QRCode = require('qrcode');
@@ -11,6 +9,60 @@ const { saveOwner } = require('./ownerStorage');
 const SESSIONS_DIR = path.join(__dirname, '..', 'sessions');
 const activeSockets = new Map();
 const qrMessages = new Map();
+
+// Validate environment before starting
+console.log('🔍 Railway Bot Initialization...');
+if (!process.env.BOT_TOKEN) {
+    console.error('🔴 ERROR: BOT_TOKEN environment variable is not set!');
+    console.error('   Add BOT_TOKEN to your Railway environment variables.');
+    process.exit(1);
+}
+console.log('✅ BOT_TOKEN found');
+
+// Initialize bot with error handling
+const telegram = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
+console.log('✅ Telegram bot initialized');
+
+// Handle polling errors to prevent 409 conflicts
+telegram.on('polling_error', (error) => {
+    if (error.code === 'ETELEGRAM' && error.message.includes('409')) {
+        console.error('🔴 Telegram 409 Conflict: Multiple bot instances detected');
+        console.error('Stopping polling to allow other instance to run...');
+        telegram.stopPolling();
+        setTimeout(() => process.exit(1), 2000);
+    } else {
+        console.error('Telegram polling error:', error.message);
+    }
+});
+
+// Graceful shutdown handler
+process.on('SIGTERM', async () => {
+    console.log('SIGTERM received: Starting graceful shutdown...');
+    telegram.stopPolling();
+    for (const [id, sock] of activeSockets) {
+        try {
+            sock.ev?.removeAllListeners?.();
+            sock.ws?.close?.();
+            sock.end?.();
+        } catch (_) {}
+    }
+    activeSockets.clear();
+    setTimeout(() => process.exit(0), 2000);
+});
+
+process.on('SIGINT', async () => {
+    console.log('SIGINT received: Starting graceful shutdown...');
+    telegram.stopPolling();
+    for (const [id, sock] of activeSockets) {
+        try {
+            sock.ev?.removeAllListeners?.();
+            sock.ws?.close?.();
+            sock.end?.();
+        } catch (_) {}
+    }
+    activeSockets.clear();
+    setTimeout(() => process.exit(0), 2000);
+});
 
 telegram.onText(/\/start/, (msg) => {
     telegram.sendMessage(msg.chat.id,
@@ -143,153 +195,137 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
 
             if (connection === 'close') {
                 const reason = lastDisconnect?.error?.output?.statusCode;
-                console.log(`❌ [${identifier}] Closed: ${reason}`);
+                console.log(`\n❌ [${identifier}] Connection Closed`);
+                console.log(`   Reason Code: ${reason}`);
                 if (reason !== DisconnectReason.loggedOut && reason !== 401) {
+                    console.log(`   Attempting to reconnect...`);
                     startWhatsAppSession(tgChatId, identifier, false);
                 } else {
+                    console.log(`   Logged out or invalid session`);
                     if (tgChatId) telegram.sendMessage(tgChatId, "⚠️ Logged Out. /link to reconnect.").catch(() => {});
-                    fs.removeSync(sessionPath);
+                    try { fs.removeSync(sessionPath); } catch (e) {}
                     activeSockets.delete(identifier);
                 }
             } else if (connection === 'open') {
-                console.log(`✅ [${identifier}] ONLINE!`);
+                console.log(`\n${'='.repeat(50)}`);
+                console.log(`✅ [${identifier}] WhatsApp Connected!`);
+                console.log(`${'='.repeat(50)}\n`);
                 
                 // ── Set start time — only process messages AFTER this ──
                 botStartTime = Math.floor(Date.now() / 1000);
                 
                 // ── Auto-add connected user as OWNER ──
-                const myNumber = sock.user.id.split(':')[0].split('@')[0];
-                saveOwner(myNumber);
-                console.log(`👑 [OWNER] Connected user: ${myNumber}`);
+                try {
+                    const myNumber = sock.user.id.split(':')[0].split('@')[0];
+                    saveOwner(myNumber);
+                    console.log(`👑 Owner user: ${myNumber}`);
+                } catch (e) {
+                    console.error('Failed to save owner:', e.message);
+                }
 
                 if (tgChatId) {
-                    const prev = qrMessages.get(tgChatId); if (prev) { telegram.deleteMessage(tgChatId, prev).catch(() => {}); qrMessages.delete(tgChatId); }
+                    const prev = qrMessages.get(tgChatId); 
+                    if (prev) { 
+                        telegram.deleteMessage(tgChatId, prev).catch(() => {}); 
+                        qrMessages.delete(tgChatId); 
+                    }
                     telegram.sendMessage(tgChatId, `✅ *Connected!*\n👑 You are now Owner.\nSend *.menu* on WhatsApp.`, { parse_mode: 'Markdown' }).catch(() => {});
                 }
+            }
             }
         });
 
         sock.ev.on('creds.update', saveCreds);
 
-        // Load commands
+        // Load commands from directory
         const commands = new Map();
+        const commandsDir = path.join(__dirname, 'commands');
         
-        function resolveCommandsPath() {
-            const pathsToTry = [
-                path.join(__dirname, 'commands'),
-                path.join(__dirname, '..', 'commands'),
-                path.join(__dirname, '..', '..', 'commands'),
-                path.join(process.cwd(), 'backend', 'bots', 'commands'),
-                path.join(process.cwd(), 'commands')
-            ];
-            for (const tryPath of pathsToTry) {
-                if (fs.existsSync(tryPath)) {
-                    console.log('Found commands directory:', tryPath);
-                    return tryPath;
-                }
-            }
-            console.error('Commands directory not found in any of these locations:', pathsToTry);
-            return null;
-        }
-        
-        try {
-            let commandsPath = resolveCommandsPath();
-            let filesToLoad = [];
+        if (fs.existsSync(commandsDir)) {
+            const commandFiles = fs.readdirSync(commandsDir).filter(f => f.endsWith('.js'));
+            console.log(`📂 Found ${commandFiles.length} command files in ${commandsDir}`);
             
-            if (!commandsPath) {
-                // Fallback: search for command files in parent directories
-                console.log("Commands folder not found. Searching for scattered command files...");
-                const searchPaths = [
-                    __dirname,
-                    path.join(__dirname, '..'),
-                    path.join(__dirname, '..', '..'),
-                    process.cwd(),
-                    path.join(process.cwd(), 'backend', 'bots')
-                ];
-                
-                for (const searchPath of searchPaths) {
-                    try {
-                        if (fs.existsSync(searchPath)) {
-                            const found = fs.readdirSync(searchPath).filter((f) => f.endsWith('.js') && f !== 'Webnest.js' && f !== 'index.js' && f !== 'bot.js' && f !== 'telegram.js');
-                            if (found.length > 0) {
-                                console.log(`Found ${found.length} command files in:`, searchPath);
-                                filesToLoad = found.map(f => ({ name: f, path: path.join(searchPath, f) }));
-                                commandsPath = searchPath;
-                                break;
-                            }
-                        }
-                    } catch (e) {
-                        // Skip if can't read directory
-                    }
-                }
-            }
-            
-            if (!commandsPath) {
-                console.error('No commands found in any location');
-                filesToLoad = [];
-            } else {
-                filesToLoad = fs.readdirSync(commandsPath).filter(f => f.endsWith('.js')).map(f => ({ name: f, path: path.join(commandsPath, f) }));
-            }
-            
-            console.log('Found command files:', filesToLoad.length);
-            for (const file of filesToLoad) {
+            for (const file of commandFiles) {
                 try {
-                    const cmdPath = file.path;
-                    delete require.cache[require.resolve(cmdPath)]; // Clear cache to avoid stale modules
+                    const cmdPath = path.join(commandsDir, file);
+                    delete require.cache[require.resolve(cmdPath)];
                     const cmd = require(cmdPath);
+                    
                     if (cmd && cmd.name) {
                         const cmdKey = String(cmd.name).toLowerCase();
                         commands.set(cmdKey, cmd);
-                        console.log('Loaded command:', cmdKey);
+                        console.log(`  ✅ Loaded: ${cmdKey}`);
+                        
+                        // Add aliases
                         if (Array.isArray(cmd.aliases)) {
                             for (const alias of cmd.aliases) {
-                                if (alias) commands.set(String(alias).toLowerCase(), cmd);
+                                commands.set(String(alias).toLowerCase(), cmd);
                             }
                         }
+                    } else {
+                        console.warn(`  ⚠️  ${file} - No name property found`);
                     }
                 } catch (e) {
-                    console.error('Failed to load command', file.name, e.message);
+                    console.error(`  ❌ Error loading ${file}:`, e.message);
                 }
             }
-        } catch (e) {
-            console.error('Error loading commands', e);
+        } else {
+            console.error('⚠️ Commands directory not found! Creating it...');
+            fs.mkdirSync(commandsDir, { recursive: true });
         }
-        console.log('Total commands loaded:', commands.size);
+
+        console.log(`\n✅ Bot Ready! Total commands loaded: ${commands.size}\n`);
 
         sock.ev.on('messages.upsert', async (m) => {
-            const msg = m.messages[0];
-            if (!msg?.message) return;
-
-            // Normalize text from different message types
-            const text = (msg.message.conversation || msg.message.extendedTextMessage?.text || '').toString().trim();
-            const from = msg.key.remoteJid;
-            const sender = msg.key.participant || msg.key.remoteJid;
-
-            // Skip messages before bot start time
-            if (botStartTime && msg.messageTimestamp < botStartTime) return;
-
-            // Skip if message is from bot itself
-            if (msg.key.fromMe) return;
-
-            // Check if it's a command (starts with prefix)
-            const prefix = global.prefix || '.';
-            if (!text.startsWith(prefix)) return;
-
-            const args = text.slice(prefix.length).trim().split(/\s+/);
-            const commandName = args.shift().toLowerCase();
-
-            const command = commands.get(commandName);
-            if (!command) return;
-
             try {
-                await command.execute(sock, msg, args);
-            } catch (e) {
-                console.error('Command execution error:', e);
-                try {
-                    await sock.sendMessage(from, { text: '❌ Error executing command.' });
-                } catch (sendErr) {
-                    console.error('Failed to send error message:', sendErr);
+                const msg = m.messages[0];
+                if (!msg?.message) return;
+
+                // Normalize text from different message types
+                const text = (msg.message.conversation || msg.message.extendedTextMessage?.text || '').toString().trim();
+                const from = msg.key.remoteJid;
+                const sender = msg.key.participant || msg.key.remoteJid;
+
+                // Skip messages before bot start time
+                if (botStartTime && msg.messageTimestamp < botStartTime) return;
+
+                // Skip if message is from bot itself
+                if (msg.key.fromMe) return;
+
+                // Check if it's a command (starts with prefix)
+                const prefix = global.prefix || '.';
+                if (!text.startsWith(prefix)) return;
+
+                const args = text.slice(prefix.length).trim().split(/\s+/);
+                const commandName = args.shift().toLowerCase();
+
+                console.log(`📨 Command received: ${commandName} | From: ${sender} | Args: ${args.length}`);
+
+                const command = commands.get(commandName);
+                if (!command) {
+                    console.log(`  ⚠️  Unknown command: ${commandName}`);
+                    try {
+                        await sock.sendMessage(from, { text: `❌ Unknown command: *${commandName}*\n\nType *.help* for available commands.` });
+                    } catch (e) {
+                        console.error('Failed to send unknown command message:', e.message);
+                    }
+                    return;
                 }
+
+                try {
+                    console.log(`  ⏱️  Executing: ${commandName}`);
+                    await command.execute(sock, msg, args);
+                    console.log(`  ✅ Command executed: ${commandName}`);
+                } catch (cmdError) {
+                    console.error(`  ❌ Execution error for ${commandName}:`, cmdError.message);
+                    try {
+                        await sock.sendMessage(from, { text: `❌ Error executing command: ${commandName}\n\nError: ${cmdError.message || 'Unknown error'}` });
+                    } catch (sendErr) {
+                        console.error('Failed to send error message:', sendErr.message);
+                    }
+                }
+            } catch (e) {
+                console.error('🔴 Fatal error in message handler:', e.message);
             }
         });
 

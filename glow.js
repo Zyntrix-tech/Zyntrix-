@@ -1,21 +1,21 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 
 const art = {
-    stars: ['✦', '✧', '★', '☆', '✶', '✷'],
-    sparkles: ['✨', '💫', '⭐', '🌟', '✴️', '❇️'],
-    hearts: ['❤', '💖', '💕', '💗', '♥', '💓'],
-    fire: ['🔥', '🔥', '🔥', '⚡', '💥', '🌈']
+    stars: ['Γ£ª', 'Γ£º', 'Γÿà', 'Γÿå', 'Γ£╢', 'Γ£╖'],
+    sparkles: ['Γ£¿', '≡ƒÆ½', 'Γ¡É', '≡ƒîƒ', 'Γ£┤∩╕Å', 'Γ¥ç∩╕Å'],
+    hearts: ['Γ¥ñ', '≡ƒÆû', '≡ƒÆò', '≡ƒÆù', 'ΓÖÑ', '≡ƒÆô'],
+    fire: ['≡ƒöÑ', '≡ƒöÑ', '≡ƒöÑ', 'ΓÜí', '≡ƒÆÑ', '≡ƒîê']
 };
 
 const compliments = [
-    "✨ 10/10 You're absolutely amazing! ✨",
-    "🌟 10/10 You light up every room! 🌟",
-    "💫 10/10 Pure magic! 💫",
-    "👑 10/10 Royal vibes only! 👑",
-    "💎 10/10 Precious gem! 💎",
-    "🔥 10/10 On fire! 🔥",
-    "⚡ 10/10 Electric energy! ⚡",
-    "🌈 10/10 Rainbow soul! 🌈"
+    "Γ£¿ 10/10 You're absolutely amazing! Γ£¿",
+    "≡ƒîƒ 10/10 You light up every room! ≡ƒîƒ",
+    "≡ƒÆ½ 10/10 Pure magic! ≡ƒÆ½",
+    "≡ƒææ 10/10 Royal vibes only! ≡ƒææ",
+    "≡ƒÆÄ 10/10 Precious gem! ≡ƒÆÄ",
+    "≡ƒöÑ 10/10 On fire! ≡ƒöÑ",
+    "ΓÜí 10/10 Electric energy! ΓÜí",
+    "≡ƒîê 10/10 Rainbow soul! ≡ƒîê"
 ];
 
 function getRandom(arr) {
@@ -34,7 +34,7 @@ module.exports = {
         const glow = getRandom(art.sparkles);
         
         await sock.sendMessage(from, {
-            text: `${glow}${glow}${glow}\n\n✨ *GLOW UP* ✨\n\n${glow} *${glowText}* ${glow}\n\n${getRandom(compliments)}\n\n${glow}${glow}${glow}`,
+            text: `${glow}${glow}${glow}\n\nΓ£¿ *GLOW UP* Γ£¿\n\n${glow} *${glowText}* ${glow}\n\n${getRandom(compliments)}\n\n${glow}${glow}${glow}`,
             quoted: msg
         });
     }

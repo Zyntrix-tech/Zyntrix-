@@ -1,24 +1,24 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const asciiArt = {
-    shrug: `¯\\_(ツ)_/¯`,
-    tableflip: `(╯°□°)╯︵ ┻━┻`,
-    unflip: '┬─┬ノ( º _ ºノ)',
-    lenny: '( ͡° ͜ʖ ͡°)',
-    disapprove: 'ಠ_ಠ',
-    bear: 'ʕ•ᴥ•ʔ',
-    sparkles: '✧･ﾟ: *✧･ﾟ:*',
-    heart: '♥‿♥',
-    cry: '(ಥ﹏ಥ)',
-    cool: '( ̄ー ̄)',
-    trippy: '(╭ರ_•́)',
-    confused: '(◎_◎;)',
-    angry: '(ノಠ益ಠ)ノ彡┻━┻',
-    shrug2: '┐(´д`)┌',
-    magic: '(ノ°∀°)ノ⌒・*:.。',
-    fight: '(ง' + "'" + `_')ง`,
-    sad: '(╥_╥)',
-    yay: '(◕‿◕)'
+    shrug: `┬»\\_(πâä)_/┬»`,
+    tableflip: `(Γò»┬░Γûí┬░)Γò»∩╕╡ Γö╗ΓöüΓö╗`,
+    unflip: 'Γö¼ΓöÇΓö¼πâÄ( ┬║ _ ┬║πâÄ)',
+    lenny: '( ═í┬░ ═£╩û ═í┬░)',
+    disapprove: 'α▓á_α▓á',
+    bear: '╩òΓÇóß┤ÑΓÇó╩ö',
+    sparkles: 'Γ£º∩╜Ñ∩╛ƒ: *Γ£º∩╜Ñ∩╛ƒ:*',
+    heart: 'ΓÖÑΓÇ┐ΓÖÑ',
+    cry: '(α▓Ñ∩╣Åα▓Ñ)',
+    cool: '( ╠äπâ╝ ╠ä)',
+    trippy: '(Γò¡α▓░_ΓÇó╠ü)',
+    confused: '(ΓùÄ_ΓùÄ;)',
+    angry: '(πâÄα▓áτ¢èα▓á)πâÄσ╜íΓö╗ΓöüΓö╗',
+    shrug2: 'ΓöÉ(┬┤╨┤`)Γöî',
+    magic: '(πâÄ┬░ΓêÇ┬░)πâÄΓîÆπâ╗*:.πÇé',
+    fight: '(α╕ç' + "'" + `_')α╕ç`,
+    sad: '(ΓòÑ_ΓòÑ)',
+    yay: '(ΓùòΓÇ┐Γùò)'
 };
 
 module.exports = {

@@ -1,8 +1,8 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "cry",
-    aliases: ["sad", "tears", "😭"],
+    aliases: ["sad", "tears", "≡ƒÿ¡"],
     description: "Send crying reaction",
 
     async execute(sock, msg, args = []) {
@@ -12,11 +12,11 @@ module.exports = {
         const contextInfo = createForwardedContext();
         
         const cries = [
-            "😢 * bursts into tears!*",
-            "💧 *is crying their heart out!*",
-            "😭 *can't stop crying!*",
-            "🥺 *has tears in their eyes!*",
-            "😿 *is sobbing!*"
+            "≡ƒÿó * bursts into tears!*",
+            "≡ƒÆº *is crying their heart out!*",
+            "≡ƒÿ¡ *can't stop crying!*",
+            "≡ƒÑ║ *has tears in their eyes!*",
+            "≡ƒÿ┐ *is sobbing!*"
         ];
         
         const cry = cries[Math.floor(Math.random() * cries.length)];
@@ -24,12 +24,12 @@ module.exports = {
         if (args.length > 0) {
             const target = args.join(" ");
             await sock.sendMessage(from, { 
-                text: `${sender} cries because of ${target}\n\n${cry}\n\n💔 Too sad!`,
+                text: `${sender} cries because of ${target}\n\n${cry}\n\n≡ƒÆö Too sad!`,
                 contextInfo 
             }, { quoted: msg });
         } else {
             await sock.sendMessage(from, { 
-                text: `${sender} is crying\n\n${cry}\n\n💔 It's okay to cry!`,
+                text: `${sender} is crying\n\n${cry}\n\n≡ƒÆö It's okay to cry!`,
                 contextInfo 
             }, { quoted: msg });
         }

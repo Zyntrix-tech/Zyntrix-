@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "stfu",
@@ -14,12 +14,12 @@ module.exports = {
         if (args.length > 0) {
             const target = args.join(" ");
             await sock.sendMessage(from, { 
-                text: `🤐 *${target}, please be quiet!*\n\n🤫 *Shhh!*`,
+                text: `≡ƒñÉ *${target}, please be quiet!*\n\n≡ƒñ½ *Shhh!*`,
                 contextInfo 
             }, { quoted: msg });
         } else {
             await sock.sendMessage(from, { 
-                text: `🤐 *${sender} says shhh!*\n\n🤫 *Quiet please!*`,
+                text: `≡ƒñÉ *${sender} says shhh!*\n\n≡ƒñ½ *Quiet please!*`,
                 contextInfo 
             }, { quoted: msg });
         }

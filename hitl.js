@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "fight",
@@ -12,12 +12,12 @@ module.exports = {
         const contextInfo = createForwardedContext();
         
         const attacks = [
-            "🥊 *throws a punch!*",
-            "🦵 *delivers a roundhouse kick!*",
-            "👊 *lands a solid hit!*",
-            "💥 *unleashes a devastating combo!*",
-            "🔥 *uses fire fist!*",
-            "⚡ *strikes with lightning speed!*"
+            "≡ƒÑè *throws a punch!*",
+            "≡ƒª╡ *delivers a roundhouse kick!*",
+            "≡ƒæè *lands a solid hit!*",
+            "≡ƒÆÑ *unleashes a devastating combo!*",
+            "≡ƒöÑ *uses fire fist!*",
+            "ΓÜí *strikes with lightning speed!*"
         ];
         
         const attack = attacks[Math.floor(Math.random() * attacks.length)];
@@ -25,12 +25,12 @@ module.exports = {
         if (args.length > 0) {
             const target = args.join(" ");
             await sock.sendMessage(from, { 
-                text: `⚔️ *${sender} attacks ${target}!*\n\n${attack}\n\n💥 *KO!*`,
+                text: `ΓÜö∩╕Å *${sender} attacks ${target}!*\n\n${attack}\n\n≡ƒÆÑ *KO!*`,
                 contextInfo 
             }, { quoted: msg });
         } else {
             await sock.sendMessage(from, { 
-                text: `⚔️ *${sender} wants to fight!*\n\n${attack}\n\n🥊 Who's next?`,
+                text: `ΓÜö∩╕Å *${sender} wants to fight!*\n\n${attack}\n\n≡ƒÑè Who's next?`,
                 contextInfo 
             }, { quoted: msg });
         }

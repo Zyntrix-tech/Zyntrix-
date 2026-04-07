@@ -1,4 +1,4 @@
-const axios = require("axios");
+﻿const axios = require("axios");
 const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
         
         try {
             // Send reaction
-            await sock.sendMessage(from, { react: { text: "🐱", key: msg.key } });
+            await sock.sendMessage(from, { react: { text: "≡ƒÉ▒", key: msg.key } });
 
             // Fetch random cat image
             const response = await axios.get("https://api.thecatapi.com/v1/images/search");
@@ -20,7 +20,7 @@ module.exports = {
             if (!imageUrl) {
                 const contextInfo = createForwardedContext();
                 await sock.sendMessage(from, { 
-                    text: "😿 Failed to get cat image. Try again!", 
+                    text: "≡ƒÿ┐ Failed to get cat image. Try again!", 
                     contextInfo 
                 }, { quoted: msg });
                 return;
@@ -29,18 +29,18 @@ module.exports = {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
                 image: { url: imageUrl }, 
-                caption: "🐱 Meow! Here's a cute cat for you!",
+                caption: "≡ƒÉ▒ Meow! Here's a cute cat for you!",
                 contextInfo
             }, { quoted: msg });
 
             // Success reaction
-            await sock.sendMessage(from, { react: { text: "❤️", key: msg.key } });
+            await sock.sendMessage(from, { react: { text: "Γ¥ñ∩╕Å", key: msg.key } });
 
         } catch (error) {
             console.error("Cat command error:", error);
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "😿 Error getting cat image. Please try again!", 
+                text: "≡ƒÿ┐ Error getting cat image. Please try again!", 
                 contextInfo 
             }, { quoted: msg });
         }

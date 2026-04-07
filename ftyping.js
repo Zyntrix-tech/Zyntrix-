@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: 'ftyping',
@@ -14,7 +14,7 @@ module.exports = {
         
         if (!isOwner) {
             await sock.sendMessage(from, { 
-                text: "⌨️ Only the bot owner can configure fake typing!" 
+                text: "Γî¿∩╕Å Only the bot owner can configure fake typing!" 
             }, { quoted: msg });
             return;
         }
@@ -30,7 +30,7 @@ module.exports = {
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "⌨️ *FAKE TYPING ENABLED*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n✅ Fake typing indicator is now ACTIVE!\n\n📝 When someone sends you a message, it will appear as if you are typing.\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n💡 Use !ftyping off to disable.",
+                text: "Γî¿∩╕Å *FAKE TYPING ENABLED*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£à Fake typing indicator is now ACTIVE!\n\n≡ƒô¥ When someone sends you a message, it will appear as if you are typing.\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Use !ftyping off to disable.",
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -41,7 +41,7 @@ module.exports = {
             
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "⌨️ *FAKE TYPING DISABLED*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n✅ Fake typing indicator is now INACTIVE!\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n💡 Use !ftyping on to enable.",
+                text: "Γî¿∩╕Å *FAKE TYPING DISABLED*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£à Fake typing indicator is now INACTIVE!\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Use !ftyping on to enable.",
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -49,11 +49,11 @@ module.exports = {
         
         // Show current status
         const isEnabled = global.fakeTypingSettings.enabled;
-        const status = isEnabled ? '✅ ACTIVE' : '❌ INACTIVE';
+        const status = isEnabled ? 'Γ£à ACTIVE' : 'Γ¥î INACTIVE';
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: `⌨️ *FAKE TYPING STATUS*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📊 Current Status: ${status}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n💡 Usage:\n!ftyping on - Enable fake typing\n!ftyping off - Disable fake typing`,
+            text: `Γî¿∩╕Å *FAKE TYPING STATUS*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒôè Current Status: ${status}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Usage:\n!ftyping on - Enable fake typing\n!ftyping off - Disable fake typing`,
             contextInfo 
         }, { quoted: msg });
     }

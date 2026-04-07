@@ -1,4 +1,4 @@
-function normalizeJid(jid) {
+﻿function normalizeJid(jid) {
     if (!jid) return "";
     const s = String(jid).trim().toLowerCase();
     const [left, domain] = s.split("@");

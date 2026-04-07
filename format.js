@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "format",
@@ -11,7 +11,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "✨ *TEXT STYLER*\n\nUsage: !format <style> <text>\n\nStyles:\nbold\nitalic\nunderline\ncode\nquote\n\nExample:\n!format bold Hello",
+                text: "Γ£¿ *TEXT STYLER*\n\nUsage: !format <style> <text>\n\nStyles:\nbold\nitalic\nunderline\ncode\nquote\n\nExample:\n!format bold Hello",
                 contextInfo 
             }, { quoted: msg });
             return;

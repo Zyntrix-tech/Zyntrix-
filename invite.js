@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "invite",
@@ -11,7 +11,7 @@ module.exports = {
         // Check if it's a group
         if (!jid.endsWith("@g.us")) {
             await sock.sendMessage(jid, { 
-                text: "🔗 This command only works in groups!" 
+                text: "≡ƒöù This command only works in groups!" 
             }, { quoted: msg });
             return;
         }
@@ -34,14 +34,14 @@ module.exports = {
             const contextInfo = createForwardedContext();
             
             await sock.sendMessage(jid, { 
-                text: `🔗 *GROUP INVITE LINK*\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📛 *Group:* ${metadata.subject}\n\n🔗 *Link:* ${inviteLink}\n\n━━━━━━━━━━━━━━━━━━━━━━\n\n📌 Anyone with this link can join the group!\n\n${!isBotAdmin && !isOwner ? '\n⚠️ Note: Bot is not admin, cannot revoke link.' : '\n💡 Use !revoke to generate a new link'}`,
+                text: `≡ƒöù *GROUP INVITE LINK*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒô¢ *Group:* ${metadata.subject}\n\n≡ƒöù *Link:* ${inviteLink}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒôî Anyone with this link can join the group!\n\n${!isBotAdmin && !isOwner ? '\nΓÜá∩╕Å Note: Bot is not admin, cannot revoke link.' : '\n≡ƒÆí Use !revoke to generate a new link'}`,
                 contextInfo 
             }, { quoted: msg });
 
         } catch (err) {
             console.error("Invite command error:", err);
             await sock.sendMessage(jid, { 
-                text: "❌ Failed to get invite link. I need to be an admin!" 
+                text: "Γ¥î Failed to get invite link. I need to be an admin!" 
             }, { quoted: msg });
         }
     }

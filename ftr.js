@@ -1,4 +1,4 @@
-const { formatMessage } = require('../fomatter')
+﻿const { formatMessage } = require('../fomatter')
 
 module.exports = {
     name: 'ftr',
@@ -33,7 +33,7 @@ module.exports = {
 
             // Send the message as if it was recorded as a voice note
             // We'll indicate it's a "voice message" in the output
-            const response = formatMessage('🎤 FAKE RECORDING', `📢 Message sent as fake recording:\n\n"${messageText}"`)
+            const response = formatMessage('≡ƒÄñ FAKE RECORDING', `≡ƒôó Message sent as fake recording:\n\n"${messageText}"`)
             await sock.sendMessage(from, { text: response }, { quoted: msg })
 
             console.log(`FTR command executed in ${from}: ${messageText}`)

@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "guess",
@@ -8,26 +8,26 @@ module.exports = {
     async execute(sock, msg, args) {
         const from = msg.key.remoteJid;
         
-        await sock.sendMessage(from, { react: { text: '🎯', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÄ»', key: msg.key } });
         
         const puzzles = [
-            { emoji: "🌧️☀️", answer: "Rainbow" },
-            { emoji: "⏰💣", answer: "Time bomb" },
-            { emoji: "🌙💤", answer: "Good night / Sleep" },
-            { emoji: "🔥🐶", answer: "Hot dog" },
-            { emoji: "🌻🐝", answer: "Honey" },
-            { emoji: "🍎📱", answer: "iPhone" },
-            { emoji: "👻🏠", answer: "Haunted house" },
-            { emoji: "🦁👑", answer: "Lion king" },
-            { emoji: "🌽🍞", answer: "Cornbread" },
-            { emoji: "🎂🕯️", answer: "Birthday cake" }
+            { emoji: "≡ƒîº∩╕ÅΓÿÇ∩╕Å", answer: "Rainbow" },
+            { emoji: "ΓÅ░≡ƒÆú", answer: "Time bomb" },
+            { emoji: "≡ƒîÖ≡ƒÆñ", answer: "Good night / Sleep" },
+            { emoji: "≡ƒöÑ≡ƒÉ╢", answer: "Hot dog" },
+            { emoji: "≡ƒî╗≡ƒÉ¥", answer: "Honey" },
+            { emoji: "≡ƒìÄ≡ƒô▒", answer: "iPhone" },
+            { emoji: "≡ƒæ╗≡ƒÅá", answer: "Haunted house" },
+            { emoji: "≡ƒªü≡ƒææ", answer: "Lion king" },
+            { emoji: "≡ƒî╜≡ƒì₧", answer: "Cornbread" },
+            { emoji: "≡ƒÄé≡ƒò»∩╕Å", answer: "Birthday cake" }
         ];
         
         const puzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: "🎯 *GUESS THE EMOJI*\n\n" + puzzle.emoji + "\n\nReply with your answer!",
+            text: "≡ƒÄ» *GUESS THE EMOJI*\n\n" + puzzle.emoji + "\n\nReply with your answer!",
             contextInfo 
         }, { quoted: msg });
     }

@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const brainteasers = [
     { q: "What has keys but can't open locks?", a: "A piano" },
@@ -34,7 +34,7 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `🧠 *Brain Teaser*\n\n${brainteaser.q}\n\n*Type:* !brainteaser reveal to see answer`,
+            text: `≡ƒºá *Brain Teaser*\n\n${brainteaser.q}\n\n*Type:* !brainteaser reveal to see answer`,
             contextInfo
         }, { quoted: msg });
 
@@ -42,7 +42,7 @@ module.exports = {
         if (!global.brainteaserAnswers) global.brainteaserAnswers = {};
         global.brainteaserAnswers[from] = brainteaser.a;
         
-        await sock.sendMessage(from, { react: { text: '🤔', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒñö', key: msg.key } });
     },
 
     async reveal(sock, msg) {
@@ -53,7 +53,7 @@ module.exports = {
         
         if (answer) {
             await sock.sendMessage(from, {
-                text: `💡 *Answer:* ${answer}`,
+                text: `≡ƒÆí *Answer:* ${answer}`,
                 contextInfo
             }, { quoted: msg });
             delete global.brainteaserAnswers[from];

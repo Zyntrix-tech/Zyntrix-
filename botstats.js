@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "botstats",
@@ -37,21 +37,21 @@ module.exports = {
         const contextInfo = createForwardedContext();
         
         await sock.sendMessage(from, { 
-            text: `📊 *NEXORA BOT STATISTICS*\n\n` +
-                  `━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-                  `🤖 *Bot Info:*\n` +
-                  `• Name: Zyntrix MD⚡\n` +
-                  `• Mode: ${mode}\n` +
-                  `• Commands: ${commandCount}+\n\n` +
-                  `⏱️ *Uptime:*\n` +
-                  `• ${days}d ${hours}h ${minutes}m\n\n` +
-                  `💾 *Memory:*\n` +
-                  `• Used: ${memUsed} MB\n` +
-                  `• Total: ${memTotal} MB\n\n` +
-                  `👥 *Owner:*\n` +
-                  `• ${global.ownerJid ? global.ownerJid.split('@')[0] : 'Not set'}\n\n` +
-                  `━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-                  `> 🚀 Powered by ⟦ 𓆩𖤍 ZYNTRIX 𖤍𓆪 ⟧`,
+            text: `≡ƒôè *NEXORA BOT STATISTICS*\n\n` +
+                  `ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n` +
+                  `≡ƒñû *Bot Info:*\n` +
+                  `ΓÇó Name: Zyntrix MDΓÜí\n` +
+                  `ΓÇó Mode: ${mode}\n` +
+                  `ΓÇó Commands: ${commandCount}+\n\n` +
+                  `ΓÅ▒∩╕Å *Uptime:*\n` +
+                  `ΓÇó ${days}d ${hours}h ${minutes}m\n\n` +
+                  `≡ƒÆ╛ *Memory:*\n` +
+                  `ΓÇó Used: ${memUsed} MB\n` +
+                  `ΓÇó Total: ${memTotal} MB\n\n` +
+                  `≡ƒæÑ *Owner:*\n` +
+                  `ΓÇó ${global.ownerJid ? global.ownerJid.split('@')[0] : 'Not set'}\n\n` +
+                  `ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n` +
+                  `> ≡ƒÜÇ Powered by Γƒª ≡ôå⌐≡ûñì ZYNTRIX ≡ûñì≡ôå¬ Γƒº`,
             contextInfo 
         }, { quoted: msg });
     }

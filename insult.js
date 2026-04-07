@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "insult",
@@ -8,7 +8,7 @@ module.exports = {
     async execute(sock, msg, args) {
         const from = msg.key.remoteJid;
         
-        await sock.sendMessage(from, { react: { text: '😏', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÿÅ', key: msg.key } });
         
         const insults = [
             "You're proof that evolution can go in reverse.",
@@ -30,7 +30,7 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: "😏 *ROAST*\n\n" + insult,
+            text: "≡ƒÿÅ *ROAST*\n\n" + insult,
             contextInfo 
         }, { quoted: msg });
     }

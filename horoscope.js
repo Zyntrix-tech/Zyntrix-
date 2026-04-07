@@ -1,18 +1,18 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const horoscopes = {
-    aries: { emoji: "♈", traits: "Bold, ambitious, spontaneous" },
-    taurus: { emoji: "♉", traits: "Patient, reliable, devoted" },
-    gemini: { emoji: "♊", traits: "Curious, adaptable, communicative" },
-    cancer: { emoji: "♋", traits: "Intuitive, emotional, protective" },
-    leo: { emoji: "♌", traits: "Creative, passionate, generous" },
-    virgo: { emoji: "♍", traits: "Analytical, practical, loyal" },
-    libra: { emoji: "♎", traits: "Diplomatic, fair-minded, social" },
-    scorpio: { emoji: "♏", traits: "Resourceful, passionate, brave" },
-    sagittarius: { emoji: "♐", traits: "Optimistic, adventurous, honest" },
-    capricorn: { emoji: "♑", traits: "Disciplined, responsible, ambitious" },
-    aquarius: { emoji: "♒", traits: "Progressive, original, independent" },
-    pisces: { emoji: "♓", traits: "Compassionate, artistic, intuitive" }
+    aries: { emoji: "ΓÖê", traits: "Bold, ambitious, spontaneous" },
+    taurus: { emoji: "ΓÖë", traits: "Patient, reliable, devoted" },
+    gemini: { emoji: "ΓÖè", traits: "Curious, adaptable, communicative" },
+    cancer: { emoji: "ΓÖï", traits: "Intuitive, emotional, protective" },
+    leo: { emoji: "ΓÖî", traits: "Creative, passionate, generous" },
+    virgo: { emoji: "ΓÖì", traits: "Analytical, practical, loyal" },
+    libra: { emoji: "ΓÖÄ", traits: "Diplomatic, fair-minded, social" },
+    scorpio: { emoji: "ΓÖÅ", traits: "Resourceful, passionate, brave" },
+    sagittarius: { emoji: "ΓÖÉ", traits: "Optimistic, adventurous, honest" },
+    capricorn: { emoji: "ΓÖæ", traits: "Disciplined, responsible, ambitious" },
+    aquarius: { emoji: "ΓÖÆ", traits: "Progressive, original, independent" },
+    pisces: { emoji: "ΓÖô", traits: "Compassionate, artistic, intuitive" }
 };
 
 const readings = [
@@ -38,7 +38,7 @@ module.exports = {
     async execute(sock, msg, args) {
         const from = msg.key.remoteJid;
         
-        await sock.sendMessage(from, { react: { text: '🌟', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒîƒ', key: msg.key } });
         
         let sign = args[0]?.toLowerCase();
         
@@ -46,7 +46,7 @@ module.exports = {
             const signsList = Object.keys(horoscopes).join(', ');
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🌟 *HOROSCOPE*\n\nPlease specify your zodiac sign:\n\n!horoscope aries\n!horoscope taurus\n!horoscope gemini\n!horoscope cancer\n!horoscope leo\n!horoscope virgo\n!horoscope libra\n!horoscope scorpio\n!horoscope sagittarius\n!horoscope capricorn\n!horoscope aquarius\n!horoscope pisces\n\n_Example: !horoscope leo_`,
+                text: `≡ƒîƒ *HOROSCOPE*\n\nPlease specify your zodiac sign:\n\n!horoscope aries\n!horoscope taurus\n!horoscope gemini\n!horoscope cancer\n!horoscope leo\n!horoscope virgo\n!horoscope libra\n!horoscope scorpio\n!horoscope sagittarius\n!horoscope capricorn\n!horoscope aquarius\n!horoscope pisces\n\n_Example: !horoscope leo_`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -55,7 +55,7 @@ module.exports = {
         if (!horoscopes[sign]) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `❌ Invalid sign. Use !horoscope <sign> with these signs: aries, taurus, gemini, cancer, leo, virgo, libra, scorpio, sagittarius, capricorn, aquarius, pisces`,
+                text: `Γ¥î Invalid sign. Use !horoscope <sign> with these signs: aries, taurus, gemini, cancer, leo, virgo, libra, scorpio, sagittarius, capricorn, aquarius, pisces`,
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -66,7 +66,7 @@ module.exports = {
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: `🌟 *HOROSCOPE - ${sign.toUpperCase()}* ${h.emoji}\n\n*Traits:* ${h.traits}\n\n📜 *Today's Reading:*\n\n${reading}`,
+            text: `≡ƒîƒ *HOROSCOPE - ${sign.toUpperCase()}* ${h.emoji}\n\n*Traits:* ${h.traits}\n\n≡ƒô£ *Today's Reading:*\n\n${reading}`,
             contextInfo 
         }, { quoted: msg });
     }

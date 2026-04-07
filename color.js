@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 module.exports = {
     name: "color",
@@ -11,13 +11,13 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "🎨 *COLOR INFO*\n\nUsage: !color <hex or color name>\n\nExample:\n!color #FF5733\n!color red",
+                text: "≡ƒÄ¿ *COLOR INFO*\n\nUsage: !color <hex or color name>\n\nExample:\n!color #FF5733\n!color red",
                 contextInfo 
             }, { quoted: msg });
             return;
         }
         
-        await sock.sendMessage(from, { react: { text: '🎨', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒÄ¿', key: msg.key } });
         
         let input = args.join(' ').toLowerCase();
         
@@ -42,7 +42,7 @@ module.exports = {
             return;
         }
         
-        const text = "🎨 *COLOR INFO*\n\nHex: *" + hex + "*\n\nColor preview:\n█████████████";
+        const text = "≡ƒÄ¿ *COLOR INFO*\n\nHex: *" + hex + "*\n\nColor preview:\nΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê";
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { text: text, contextInfo }, { quoted: msg });

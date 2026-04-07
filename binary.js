@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const textToBinary = (str) => {
     return str.split('').map(char => {
@@ -24,7 +24,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: `🧮 *Binary Converter*\n\n*Usage:* !binary <text>\n\nConverts text to binary or binary to text.\n\n*Examples:*\n• !binary hello → 01101000 01100101...\n• !binary 01101000 01100101 → hello`,
+                text: `≡ƒº« *Binary Converter*\n\n*Usage:* !binary <text>\n\nConverts text to binary or binary to text.\n\n*Examples:*\nΓÇó !binary hello ΓåÆ 01101000 01100101...\nΓÇó !binary 01101000 01100101 ΓåÆ hello`,
                 contextInfo
             }, { quoted: msg });
             return;
@@ -46,10 +46,10 @@ module.exports = {
 
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `🧮 *Binary Conversion*\n\n*Input:* ${input}\n\n*Result:* \`${result}\``,
+            text: `≡ƒº« *Binary Conversion*\n\n*Input:* ${input}\n\n*Result:* \`${result}\``,
             contextInfo
         }, { quoted: msg });
         
-        await sock.sendMessage(from, { react: { text: '🧮', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒº«', key: msg.key } });
     }
 };

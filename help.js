@@ -303,7 +303,19 @@ module.exports = {
 │ ⌬ !github    → GitHub info
 │ ⌬ !news      → Latest news
 │ ⌬ !ipinfo    → IP info
-╰──────────────╯
+│ ⌬ !antilink  → Block links
+│ ⌬ !antibadword → Block bad words
+│ ⌬ !ghost     → Ghost message
+│ ⌬ !mirror    → Mirror last message
+│ ⌬ !matrix    → Matrix rain effect
+│ ⌬ !timewarp  → Time dimension warp
+│ ⌬ !soulmate  → Soulmate calculator
+│ ⌬ !secretpassage → Hidden message
+│ ⌬ !brainhack → Neural interface
+│ ⌬ !quantum   → Quantum reality
+│ ⌬ !pulse     → Chat heartbeat
+│ ⌬ !telepathy → Mind reading
+╰────────────────────────╯
 
 ╭─〔 🛠 SYSTEM 〕─╮
 │ ⌬ !ping      → Check latency

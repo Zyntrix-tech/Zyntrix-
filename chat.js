@@ -1,4 +1,4 @@
-const OpenAI = require('openai');
+﻿const OpenAI = require('openai');
 const { createForwardedContext } = require('./_helpers');
 
 // Store conversation history per user
@@ -17,17 +17,17 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🤖 *Nexora AI Chat*\n\n` +
-                      `━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                text: `≡ƒñû *Nexora AI Chat*\n\n` +
+                      `ΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n` +
                       `*Usage:* !chat <message>\n\n` +
                       `*Examples:*\n` +
-                      `• !chat Hello, how are you?\n` +
-                      `• !chat Write a poem about love\n` +
-                      `• !chat Explain quantum physics\n\n` +
+                      `ΓÇó !chat Hello, how are you?\n` +
+                      `ΓÇó !chat Write a poem about love\n` +
+                      `ΓÇó !chat Explain quantum physics\n\n` +
                       `*Features:*\n` +
-                      `• Remembers your conversation\n` +
-                      `• Powered by GPT-4\n` +
-                      `• Smart and helpful\n\n` +
+                      `ΓÇó Remembers your conversation\n` +
+                      `ΓÇó Powered by GPT-4\n` +
+                      `ΓÇó Smart and helpful\n\n` +
                       `*Clear chat:* !chat clear\n\n` +
                       `Start chatting with Nexora AI!`,
                 contextInfo 
@@ -42,7 +42,7 @@ module.exports = {
             conversationHistory.delete(sender);
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "✅ Chat history cleared! Starting fresh conversation.", 
+                text: "Γ£à Chat history cleared! Starting fresh conversation.", 
                 contextInfo 
             }, { quoted: msg });
             return;
@@ -55,7 +55,7 @@ module.exports = {
             await sock.sendPresenceUpdate('composing', from);
             
             // Loading reaction
-            await sock.sendMessage(from, { react: { text: '🤖', key: msg.key } });
+            await sock.sendMessage(from, { react: { text: '≡ƒñû', key: msg.key } });
 
             const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -99,19 +99,19 @@ module.exports = {
 
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: `🤖 *Nexora AI*\n\n${aiResponse}`, 
+                text: `≡ƒñû *Nexora AI*\n\n${aiResponse}`, 
                 contextInfo 
             }, { quoted: msg });
             
             // Success reaction
-            await sock.sendMessage(from, { react: { text: '✅', key: msg.key } });
+            await sock.sendMessage(from, { react: { text: 'Γ£à', key: msg.key } });
             
         } catch (err) {
             console.error('Chat error:', err);
-            await sock.sendMessage(from, { react: { text: '❌', key: msg.key } });
+            await sock.sendMessage(from, { react: { text: 'Γ¥î', key: msg.key } });
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, { 
-                text: "❌ Failed to get response from AI.\n\nPlease try again later.", 
+                text: "Γ¥î Failed to get response from AI.\n\nPlease try again later.", 
                 contextInfo 
             }, { quoted: msg });
         }

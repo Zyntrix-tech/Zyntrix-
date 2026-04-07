@@ -1,4 +1,4 @@
-const { formatMessage } = require('../fomatter')
+﻿const { formatMessage } = require('../fomatter')
 const fs = require('fs')
 const path = require('path')
 
@@ -109,11 +109,11 @@ async function handleRevoke(sock, revokedKey) {
 
         const time = new Date().toLocaleString()
 
-        let body = `🚨 Nexora Anti-Delete Alert
+        let body = `≡ƒÜ¿ Nexora Anti-Delete Alert
 
-• Sender: ${sender}
-• Chat: ${chatId}${groupName ? ` (${groupName})` : ''}
-• Time: ${time}
+ΓÇó Sender: ${sender}
+ΓÇó Chat: ${chatId}${groupName ? ` (${groupName})` : ''}
+ΓÇó Time: ${time}
 `
 
         if (cached) {
@@ -153,12 +153,12 @@ async function handleRevoke(sock, revokedKey) {
                 messageInfo = msg.listResponseMessage.singleSelectReply.selectedRowId
             }
             
-            if (messageInfo) body += `• Type: ${messageType}\n• Content: ${messageInfo}\n`;
+            if (messageInfo) body += `ΓÇó Type: ${messageType}\nΓÇó Content: ${messageInfo}\n`;
         } else {
-            body += '• Type: Unknown\n• Content: (not cached)\n'
+            body += 'ΓÇó Type: Unknown\nΓÇó Content: (not cached)\n'
         }
 
-        const result = formatMessage('DELETED MESSAGE ALERT🚨', body)
+        const result = formatMessage('DELETED MESSAGE ALERT≡ƒÜ¿', body)
 
         // if the only target is the bot itself, log a warning so owner remembers to set a real owner
         if (ownerTargets.length === 1 && ownerTargets[0] === sock.user.id) {
@@ -246,11 +246,11 @@ module.exports = {
             let body = ''
             
             if (isGlobalEnabled) {
-                body = '✅ Antidelete is currently *ON* globally for ALL chats.'
+                body = 'Γ£à Antidelete is currently *ON* globally for ALL chats.'
             } else if (isChatEnabled) {
-                body = '✅ Antidelete is currently *ON* for this chat.\n⚪ Global mode is OFF.'
+                body = 'Γ£à Antidelete is currently *ON* for this chat.\nΓÜ¬ Global mode is OFF.'
             } else {
-                body = '⚪ Antidelete is currently *OFF* for this chat.\n⚪ Global mode is OFF.'
+                body = 'ΓÜ¬ Antidelete is currently *OFF* for this chat.\nΓÜ¬ Global mode is OFF.'
             }
             
             const result = formatMessage('ANTIDELETE STATUS', body)
@@ -260,33 +260,33 @@ module.exports = {
         if (arg === 'on' || arg === 'enable') {
             state[from] = true
             saveJson(STATE_FILE, state)
-            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', '✅ Antidelete has been *ENABLED* for this chat. I will capture deleted messages and notify the owner.') })
+            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', 'Γ£à Antidelete has been *ENABLED* for this chat. I will capture deleted messages and notify the owner.') })
             return
         }
 
         if (arg === 'global' || arg === 'all') {
             state.global = true
             saveJson(STATE_FILE, state)
-            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', '✅ Antidelete has been *ENABLED* globally for ALL chats. I will capture deleted messages from every chat and notify the owner.') })
+            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', 'Γ£à Antidelete has been *ENABLED* globally for ALL chats. I will capture deleted messages from every chat and notify the owner.') })
             return
         }
 
         if (arg === 'globaloff' || arg === 'alloff') {
             state.global = false
             saveJson(STATE_FILE, state)
-            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', '⚪ Global antidelete has been *DISABLED*. Only chats with individual enable will be monitored.') })
+            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', 'ΓÜ¬ Global antidelete has been *DISABLED*. Only chats with individual enable will be monitored.') })
             return
         }
 
         if (arg === 'off' || arg === 'disable') {
             state[from] = false
             saveJson(STATE_FILE, state)
-            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', '⚪ Antidelete has been *DISABLED* for this chat.') })
+            await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', 'ΓÜ¬ Antidelete has been *DISABLED* for this chat.') })
             return
         }
 
         const isGlobal = state.global === true
-        const globalStatus = isGlobal ? '\n🌐 Global: ON (all chats are monitored)' : '\n🌐 Global: OFF (only specific chats are monitored)'
+        const globalStatus = isGlobal ? '\n≡ƒîÉ Global: ON (all chats are monitored)' : '\n≡ƒîÉ Global: OFF (only specific chats are monitored)'
         await sock.sendMessage(from, { text: formatMessage('ANTIDELETE', 'Usage: !antidelete on | off | global | globaloff' + globalStatus) })
     }
 }

@@ -1,12 +1,12 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 const CHANNEL_LINK = 'https://whatsapp.com/channel/0029VbCFEZv60eBdlqXqQz20';
 
 const msgs = [
-    '📰 *NEVER MISS AN UPDATE* 📰',
-    '🌟 *YOUR DAILY DOSE* 🌟',
-    '💌 *EXCLUSIVE CONTENT* 💌'
+    '≡ƒô░ *NEVER MISS AN UPDATE* ≡ƒô░',
+    '≡ƒîƒ *YOUR DAILY DOSE* ≡ƒîƒ',
+    '≡ƒÆî *EXCLUSIVE CONTENT* ≡ƒÆî'
 ];
 
 function getRandom(arr) {
@@ -23,7 +23,7 @@ module.exports = {
         
         if (!channelCode) {
             await sock.sendMessage(from, {
-                text: getRandom(msgs) + '\n\n✨ *WHATSAPP CHANNEL TO NEWSLETTER* ✨\n\n━━━━━━━━━━━━━━━━━━━━━\n\n📌 Current Channel: ' + CHANNEL_LINK + '\n\n🔄 CONVERT TO NEWSLETTER:\n\n1️⃣ Subscribe to channel\n2️⃣ Enable notifications\n3️⃣ Get daily updates\n\n━━━━━━━━━━━━━━━━━━━━━\n\n💡 Send the channel link to convert!',
+                text: getRandom(msgs) + '\n\nΓ£¿ *WHATSAPP CHANNEL TO NEWSLETTER* Γ£¿\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒôî Current Channel: ' + CHANNEL_LINK + '\n\n≡ƒöä CONVERT TO NEWSLETTER:\n\n1∩╕ÅΓâú Subscribe to channel\n2∩╕ÅΓâú Enable notifications\n3∩╕ÅΓâú Get daily updates\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒÆí Send the channel link to convert!',
                 quoted: msg
             });
             return;
@@ -37,7 +37,7 @@ module.exports = {
         const newsletterVersion = 'https://whatsapp.com/channel/' + extractedCode + '?isent=true&newsletter=true';
         
         await sock.sendMessage(from, {
-            text: getRandom(msgs) + '\n\n✨ *CHANNEL CONVERTED TO NEWSLETTER* ✨\n\n━━━━━━━━━━━━━━━━━━━━━\n\n📋 Newsletter ID: ' + extractedCode.substring(0, 8).toUpperCase() + '\n\n🔗 Original Channel:\nhttps://whatsapp.com/channel/' + extractedCode + '\n\n📧 Newsletter Version:\n' + newsletterVersion + '\n\n━━━━━━━━━━━━━━━━━━━━━\n\n✅ Benefits:\n• Direct notifications\n• Easy sharing\n• Newsletter format',
+            text: getRandom(msgs) + '\n\nΓ£¿ *CHANNEL CONVERTED TO NEWSLETTER* Γ£¿\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒôï Newsletter ID: ' + extractedCode.substring(0, 8).toUpperCase() + '\n\n≡ƒöù Original Channel:\nhttps://whatsapp.com/channel/' + extractedCode + '\n\n≡ƒôº Newsletter Version:\n' + newsletterVersion + '\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£à Benefits:\nΓÇó Direct notifications\nΓÇó Easy sharing\nΓÇó Newsletter format',
             quoted: msg
         });
     }

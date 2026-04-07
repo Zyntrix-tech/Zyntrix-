@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const fortunes = [
     "A beautiful, smart, and loving person will be coming into your life.",
@@ -48,13 +48,13 @@ module.exports = {
     async execute(sock, msg, args) {
         const from = msg.key.remoteJid;
         
-        await sock.sendMessage(from, { react: { text: '🍪', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒì¬', key: msg.key } });
         
         const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
         
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, { 
-            text: `🍪 *FORTUNE COOKIE*\n\n"${fortune}"\n\n✨ Good luck!`,
+            text: `≡ƒì¬ *FORTUNE COOKIE*\n\n"${fortune}"\n\nΓ£¿ Good luck!`,
             contextInfo 
         }, { quoted: msg });
     }

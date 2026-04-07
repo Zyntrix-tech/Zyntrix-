@@ -1,4 +1,4 @@
-const { createForwardedContext } = require('./_helpers');
+﻿const { createForwardedContext } = require('./_helpers');
 
 const base64Encode = (str) => Buffer.from(str).toString('base64');
 const hexEncode = (str) => {
@@ -21,7 +21,7 @@ module.exports = {
         if (!args.length) {
             const contextInfo = createForwardedContext();
             await sock.sendMessage(from, {
-                text: `🔐 *Encode Tool*\n\n*Usage:* !encode <text>\n\nEncodes your text to Base64, Hex, and URL formats.\n\n*Example:* !encode hello`,
+                text: `≡ƒöÉ *Encode Tool*\n\n*Usage:* !encode <text>\n\nEncodes your text to Base64, Hex, and URL formats.\n\n*Example:* !encode hello`,
                 contextInfo
             }, { quoted: msg });
             return;
@@ -34,10 +34,10 @@ module.exports = {
 
         const contextInfo = createForwardedContext();
         await sock.sendMessage(from, {
-            text: `🔐 *Encoded:* "${text}"\n\n*Base64:* \`${base64}\`\n\n*Hex:* \`${hex}\`\n\n*URL:* \`${url}\``,
+            text: `≡ƒöÉ *Encoded:* "${text}"\n\n*Base64:* \`${base64}\`\n\n*Hex:* \`${hex}\`\n\n*URL:* \`${url}\``,
             contextInfo
         }, { quoted: msg });
         
-        await sock.sendMessage(from, { react: { text: '🔐', key: msg.key } });
+        await sock.sendMessage(from, { react: { text: '≡ƒöÉ', key: msg.key } });
     }
 };
