@@ -1,6 +1,7 @@
 ﻿const TelegramBot = require("node-telegram-bot-api");
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const QRCode = require('qrcode');
 const pino = require('pino');
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, makeCacheableSignalKeyStore } = require("@whiskeysockets/baileys");
@@ -9,6 +10,32 @@ const { saveOwner } = require('./ownerStorage');
 const SESSIONS_DIR = path.join(__dirname, '..', 'sessions');
 const activeSockets = new Map();
 const qrMessages = new Map();
+let mongoConnectPromise = null;
+
+async function connectMongo() {
+    if (mongoose.connection.readyState === 1) return mongoose.connection;
+    if (mongoConnectPromise) return mongoConnectPromise;
+
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+        console.warn('⚠️ MONGODB_URI is not set. MongoDB features will stay disabled.');
+        return null;
+    }
+
+    mongoConnectPromise = mongoose.connect(mongoUri, {
+        serverSelectionTimeoutMS: 15000
+    }).then((connection) => {
+        console.log('✅ MongoDB connected');
+        return connection;
+    }).catch((error) => {
+        console.error('❌ MongoDB connection failed:', error.message);
+        return null;
+    }).finally(() => {
+        mongoConnectPromise = null;
+    });
+
+    return mongoConnectPromise;
+}
 
 // Validate environment before starting
 console.log('🔍 Railway Bot Initialization...');
@@ -22,6 +49,61 @@ console.log('✅ BOT_TOKEN found');
 // Initialize bot with error handling
 const telegram = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 console.log('✅ Telegram bot initialized');
+connectMongo().catch((error) => {
+    console.error('❌ MongoDB startup error:', error.message);
+});
+
+// Load commands from backend/bots/commands
+global.commands = new Map();
+
+function loadCommands() {
+    const commandsDir = path.join(__dirname, 'commands');
+    const commandFiles = fs.readdirSync(commandsDir)
+        .filter((file) => file.endsWith('.js') && !['_helpers.js', 'user.js'].includes(file))
+        .sort((a, b) => a.localeCompare(b))
+        .map((file) => path.join(commandsDir, file));
+
+    global.commands.clear();
+
+    console.log(`🔎 Loading command files from ${commandsDir} ... found ${commandFiles.length}`);
+
+    for (const cmdPath of commandFiles) {
+        try {
+            delete require.cache[require.resolve(cmdPath)];
+            const loaded = require(cmdPath);
+            const file = path.basename(cmdPath);
+
+            let cmd = loaded;
+            if (typeof loaded === 'function') {
+                cmd = {
+                    name: path.basename(file, '.js'),
+                    execute: loaded
+                };
+            }
+
+            if (!cmd?.name || typeof cmd.execute !== 'function') {
+                console.warn(`  ⚠️ Skipping invalid command file: ${cmdPath}`);
+                continue;
+            }
+
+            const key = String(cmd.name).toLowerCase();
+            global.commands.set(key, cmd);
+            console.log(`  ✅ Loaded: ${key} <- ${cmdPath}`);
+
+            if (Array.isArray(cmd.aliases)) {
+                for (const alias of cmd.aliases) {
+                    if (!alias) continue;
+                    global.commands.set(String(alias).toLowerCase(), cmd);
+                }
+            }
+        } catch (error) {
+            console.error(`  ❌ Failed to load ${cmdPath}:`, error.message);
+        }
+    }
+}
+
+loadCommands();
+console.log(`\n✅ Commands loaded: ${global.commands.size}\n`);
 
 // Handle polling errors to prevent 409 conflicts
 telegram.on('polling_error', (error) => {
@@ -237,44 +319,7 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
 
         sock.ev.on('creds.update', saveCreds);
 
-        // Load commands from directory
-        const commands = new Map();
-        const commandsDir = path.join(__dirname, 'commands');
-        
-        if (fs.existsSync(commandsDir)) {
-            const commandFiles = fs.readdirSync(commandsDir).filter(f => f.endsWith('.js'));
-            console.log(`📂 Found ${commandFiles.length} command files in ${commandsDir}`);
-            
-            for (const file of commandFiles) {
-                try {
-                    const cmdPath = path.join(commandsDir, file);
-                    delete require.cache[require.resolve(cmdPath)];
-                    const cmd = require(cmdPath);
-                    
-                    if (cmd && cmd.name) {
-                        const cmdKey = String(cmd.name).toLowerCase();
-                        commands.set(cmdKey, cmd);
-                        console.log(`  ✅ Loaded: ${cmdKey}`);
-                        
-                        // Add aliases
-                        if (Array.isArray(cmd.aliases)) {
-                            for (const alias of cmd.aliases) {
-                                commands.set(String(alias).toLowerCase(), cmd);
-                            }
-                        }
-                    } else {
-                        console.warn(`  ⚠️  ${file} - No name property found`);
-                    }
-                } catch (e) {
-                    console.error(`  ❌ Error loading ${file}:`, e.message);
-                }
-            }
-        } else {
-            console.error('⚠️ Commands directory not found! Creating it...');
-            fs.mkdirSync(commandsDir, { recursive: true });
-        }
-
-        console.log(`\n✅ Bot Ready! Total commands loaded: ${commands.size}\n`);
+        console.log(`\n✅ Bot Ready!\n`);
 
         sock.ev.on('messages.upsert', async (m) => {
             try {
@@ -292,16 +337,17 @@ async function startWhatsAppSession(tgChatId, identifier, usePairing) {
                 // Skip if message is from bot itself
                 if (msg.key.fromMe) return;
 
-                // Check if it's a command (starts with prefix)
-                const prefix = global.prefix || '.';
-                if (!text.startsWith(prefix)) return;
+                // Accept both "." and "!" command prefixes.
+                const prefixes = [global.prefix || '.', '!'].filter((value, index, array) => value && array.indexOf(value) === index);
+                const usedPrefix = prefixes.find((prefix) => text.startsWith(prefix));
+                if (!usedPrefix) return;
 
-                const args = text.slice(prefix.length).trim().split(/\s+/);
+                const args = text.slice(usedPrefix.length).trim().split(/\s+/);
                 const commandName = args.shift().toLowerCase();
 
                 console.log(`📨 Command received: ${commandName} | From: ${sender} | Args: ${args.length}`);
 
-                const command = commands.get(commandName);
+                const command = global.commands.get(commandName);
                 if (!command) {
                     console.log(`  ⚠️  Unknown command: ${commandName}`);
                     try {
