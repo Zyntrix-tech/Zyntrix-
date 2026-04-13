@@ -1,0 +1,46 @@
+﻿const { createForwardedContext } = require('./_helpers');
+
+module.exports = {
+    name: 'tweet',
+    aliases: ['twitter', 'posttweet', 'xpost'],
+    description: 'Post a tweet (simulated message)',
+
+    async execute(sock, msg, args = []) {
+        const from = msg.key.remoteJid;
+        const sender = msg.key.participant || msg.key.remoteJid;
+        
+        // Check if sender is owner
+        const isOwner = global.ownerJid && String(sender).split('@')[0] === String(global.ownerJid).split('@')[0];
+        
+        if (!isOwner) {
+            await sock.sendMessage(from, { 
+                text: "≡ƒÉª Only the bot owner can post tweets!" 
+            }, { quoted: msg });
+            return;
+        }
+
+        // Get tweet content from args
+        const tweetContent = args.join(' ').trim();
+        
+        if (!tweetContent) {
+            const contextInfo = createForwardedContext();
+            await sock.sendMessage(from, { 
+                text: "≡ƒÉª *POST TWEET*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nUsage: !tweet <your_tweet>\n\nExample:\n!tweet Hello from my WhatsApp bot! ≡ƒÉª\n\nNote: This is a simulated tweet message.",
+                contextInfo 
+            }, { quoted: msg });
+            return;
+        }
+
+        // Simulate posting a tweet
+        const contextInfo = createForwardedContext();
+        
+        const tweetMessage = `≡ƒÉª *TWEET POSTED*\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\nΓ£à Your tweet has been posted!\n\n≡ƒô¥ *Content:* ${tweetContent}\n\nΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöüΓöü\n\n≡ƒòÉ Time: ${new Date().toLocaleString()}\n\n≡ƒÆí Note: This is a simulated tweet.`;
+        
+        await sock.sendMessage(from, { 
+            text: tweetMessage,
+            contextInfo 
+        }, { quoted: msg });
+
+        console.log(`Tweet posted by ${sender}: ${tweetContent}`);
+    }
+};
